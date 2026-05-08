@@ -5,8 +5,9 @@ TAFFISH is an open bioinformatics app and flow ecosystem built around versioned,
 ## Start Here
 
 - Organization: [github.com/taffish](https://github.com/taffish)
+- TAFFISH Hub: [taffish.github.io](https://taffish.github.io)
 - Package index: [taffish/taffish-index](https://github.com/taffish/taffish-index)
-- Core project: coming soon
+- Core project: online, public source release pending
 
 ## TAFFISH CLI Quick Start
 
@@ -32,8 +33,9 @@ TAFFISH 是一个面向生信工具与流程的开源生态，目标是让安装
 ### 主要入口
 
 - 组织主页：[github.com/taffish](https://github.com/taffish)
+- TAFFISH Hub：[taffish.github.io](https://taffish.github.io)
 - 索引仓库：[taffish/taffish-index](https://github.com/taffish/taffish-index)
-- 核心仓库：即将上线
+- 核心项目：已上线，暂未开源
 
 ### 常用命令
 
