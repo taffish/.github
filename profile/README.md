@@ -61,10 +61,10 @@ System install for shared servers:
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
 ```
 
-Pinned 0.2.0 install:
+Pinned 0.2.1 install:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.2.0 --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.2.1 --user
 ```
 
 For users in China, the Gitee installer downloads from the Gitee mirror and can
@@ -80,6 +80,13 @@ China/Gitee system install:
 curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
 ```
 
+macOS note: Gitee may require login for anonymous `raw` downloads of large
+binary files. If the Gitee installer fails on macOS with a `403` error or a
+large-file login message, use the GitHub installer with a working network/proxy,
+or log in to Gitee and download the macOS binary manually. The Gitee installer
+is currently most useful for Linux amd64 servers, whose binaries are much
+smaller and are usually unaffected.
+
 After `taf` is available locally, the usual starting point is:
 
 ```sh
@@ -91,7 +98,7 @@ taf info <app>
 taf list
 ```
 
-TAFFISH `0.2.0` also supports persistent mirror configuration:
+TAFFISH `0.2.1` also supports persistent mirror configuration:
 
 ```sh
 taf config init --china --force

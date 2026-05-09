@@ -59,10 +59,10 @@ curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/instal
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
 ```
 
-固定安装 0.2.0：
+固定安装 0.2.1：
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.2.0 --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.2.1 --user
 ```
 
 中国大陆用户可以使用 Gitee 安装器，从 Gitee 镜像下载并初始化中国镜像 profile：
@@ -77,6 +77,12 @@ curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffis
 curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
 ```
 
+macOS 用户注意：Gitee 可能会要求登录后才能匿名下载较大的 `raw` 二进制文件。如果
+Gitee 安装器在 macOS 上出现 `403` 或大文件需要登录的提示，这属于 Gitee raw 文件
+访问限制，不是 TAFFISH 安装器错误。这种情况下请使用 GitHub 安装方式并配置可用
+网络/代理，或者登录 Gitee 后手动下载对应的 macOS 二进制文件。Gitee 安装器目前
+更适合 Linux amd64 服务器；Linux 二进制文件较小，通常不受这个限制影响。
+
 本地可用 `taf` 之后，通常从这些命令开始：
 
 ```sh
@@ -88,7 +94,7 @@ taf info <app>
 taf list
 ```
 
-TAFFISH `0.2.0` 也支持持久化镜像配置：
+TAFFISH `0.2.1` 也支持持久化镜像配置：
 
 ```sh
 taf config init --china --force
