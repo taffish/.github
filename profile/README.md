@@ -25,10 +25,12 @@ enough to make tools, environments, parameters, and workflows reusable.
 
 | Resource | Purpose |
 | --- | --- |
-| [TAFFISH Hub](https://taffish.github.io) | Browse available TAFFISH apps, tools, and flows. |
-| [taffish/taffish](https://github.com/taffish/taffish) | Core CLI, compiler, language implementation, and installation entry point. |
-| [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | Developer documentation for TAFFISH, TAFFISH Hub, app projects, and publishing. |
-| [taffish/taffish-index](https://github.com/taffish/taffish-index) | Generated static package index consumed by `taf update` and `taf install`. |
+| [taffish.com](https://taffish.com) | Official project homepage, project story, history, and public entry point. |
+| [TAFFISH Hub](https://taffish.github.io) | Browse available TAFFISH apps, tools, flows, versions, dependencies, and install commands. |
+| [taffish/taffish](https://github.com/taffish/taffish) | Binary distribution for the local `taf` and `taffish` commands; canonical installation entry point. |
+| [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | Documentation for TAFFISH, TAFFISH Hub, app projects, `.taf` scripts, containers, dependencies, and publishing. |
+| [taffish/taffish-index](https://github.com/taffish/taffish-index) | Generated static package index consumed by `taf update`, `taf search`, `taf info`, and `taf install`. |
+| [taffish/taffish.github.io](https://github.com/taffish/taffish.github.io) | Source repository for the web Hub. |
 | [taffish/.github](https://github.com/taffish/.github) | This organization profile. |
 
 ## What TAFFISH Provides
@@ -36,24 +38,35 @@ enough to make tools, environments, parameters, and workflows reusable.
 - A small workflow language for composing bioinformatics tools and flows.
 - `taf`, a local package manager and runner for TAFFISH apps.
 - Versioned app releases using the `version-release` form, such as `0.1.0-r1`.
-- Container-aware execution through Docker or Podman backends.
+- Container-aware execution through Apptainer, Podman, or Docker backends.
 - Hub indexing so users can discover, update, install, and inspect apps from a static GitHub-hosted index.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
 
 ## Installation
 
 Install the TAFFISH CLI from [taffish/taffish](https://github.com/taffish/taffish).
-That repository is the canonical place for current installers, platform notes,
-and backend configuration.
+That repository is the canonical place for current installers, supported
+platforms, runtime dependencies, container backend notes, and troubleshooting.
+
+Quick user install:
+
+```sh
+curl -fsSL https://github.com/taffish/taffish/releases/latest/download/install-taffish.sh | sh -s -- --user
+```
 
 After `taf` is available locally, the usual starting point is:
 
 ```sh
+taf doctor
 taf update
+taf search <keyword>
 taf install <app>
 taf info <app>
-taf list --online
+taf list
 ```
+
+For a guided first run, read the
+[TAFFISH Quick Start](https://github.com/taffish/taffish-docs/blob/main/en/quick-start.en.md).
 
 ## How TAFFISH Hub Works
 
@@ -72,14 +85,16 @@ machine-facing data source.
 ## For Users
 
 Use [TAFFISH Hub](https://taffish.github.io) to browse available apps and use
-`taf` locally to install and run them. For language usage, CLI behavior, and
-development guides, read [taffish/taffish-docs](https://github.com/taffish/taffish-docs).
+`taf` locally to install and run them. For installation, CLI behavior, `.taf`
+syntax, container usage, and troubleshooting, read
+[taffish/taffish-docs](https://github.com/taffish/taffish-docs).
 
 ## For App Developers
 
 TAFFISH app projects are structured repositories with `taffish.toml`,
-`src/main.taf`, `docs/help.md`, versioned release tags, and optional metadata for
-dependencies, platform constraints, containers, and upstream software sources.
+`src/main.taf`, `docs/help.md`, `target/` build artifacts, versioned release
+tags, and optional metadata for dependencies, platform constraints, containers,
+and upstream software sources.
 
 The official Hub is curated by the `taffish` organization. At the moment,
 publishing to the official Hub is limited to organization members. Developers
