@@ -53,6 +53,12 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user
 ```
 
+系统级安装，适合共享服务器：
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
+```
+
 固定安装 0.2.0：
 
 ```sh

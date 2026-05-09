@@ -55,6 +55,12 @@ Quick user install:
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user
 ```
 
+System install for shared servers:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
+```
+
 Pinned 0.2.0 install:
 
 ```sh
