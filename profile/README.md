@@ -41,6 +41,7 @@ enough to make tools, environments, parameters, and workflows reusable.
 - Container-aware execution through Apptainer, Podman, or Docker backends.
 - Hub indexing so users can discover, update, install, and inspect apps from a static GitHub-hosted index.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
+- `taf publish --release`, backed by ignored `release.md` drafts for publish messages and GitHub Release notes.
 - Runtime mirror configuration for China/Gitee or internal Git service mirrors.
 
 ## Installation
@@ -61,10 +62,10 @@ System install for shared servers:
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
 ```
 
-Pinned 0.2.1 install:
+Pinned 0.3.0 install:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.2.1 --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.3.0 --user
 ```
 
 For users in China, the Gitee installer downloads from the Gitee mirror and can
@@ -98,7 +99,7 @@ taf info <app>
 taf list
 ```
 
-TAFFISH `0.2.1` also supports persistent mirror configuration:
+TAFFISH `0.3.0` also supports persistent mirror configuration:
 
 ```sh
 taf config init --china --force

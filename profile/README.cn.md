@@ -40,6 +40,7 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 - 通过 Apptainer、Podman 或 Docker backend 进行 container-aware 执行。
 - 基于 Hub index 的 app 发现、更新、安装和信息查询。
 - flow dependency 元数据，使 `taf install` 可以自动解析所需 app 版本。
+- `taf publish --release`，通过被 ignore 的 `release.md` 草稿提供发布 message 和 GitHub Release notes。
 - 支持中国/Gitee 或内部 Git 服务镜像的运行时镜像配置。
 
 ## 安装入口
@@ -59,10 +60,10 @@ curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/instal
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
 ```
 
-固定安装 0.2.1：
+固定安装 0.3.0：
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.2.1 --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.3.0 --user
 ```
 
 中国大陆用户可以使用 Gitee 安装器，从 Gitee 镜像下载并初始化中国镜像 profile：
@@ -94,7 +95,7 @@ taf info <app>
 taf list
 ```
 
-TAFFISH `0.2.1` 也支持持久化镜像配置：
+TAFFISH `0.3.0` 也支持持久化镜像配置：
 
 ```sh
 taf config init --china --force
