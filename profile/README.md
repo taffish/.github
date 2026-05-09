@@ -74,6 +74,12 @@ initialize the China mirror profile:
 curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sh -s -- --user
 ```
 
+China/Gitee system install:
+
+```sh
+curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
+```
+
 After `taf` is available locally, the usual starting point is:
 
 ```sh

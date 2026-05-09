@@ -71,6 +71,12 @@ curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/instal
 curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sh -s -- --user
 ```
 
+中国大陆系统级安装：
+
+```sh
+curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
+```
+
 本地可用 `taf` 之后，通常从这些命令开始：
 
 ```sh
