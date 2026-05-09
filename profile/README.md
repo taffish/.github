@@ -41,6 +41,7 @@ enough to make tools, environments, parameters, and workflows reusable.
 - Container-aware execution through Apptainer, Podman, or Docker backends.
 - Hub indexing so users can discover, update, install, and inspect apps from a static GitHub-hosted index.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
+- Runtime mirror configuration for China/Gitee or internal Git service mirrors.
 
 ## Installation
 
@@ -51,7 +52,20 @@ platforms, runtime dependencies, container backend notes, and troubleshooting.
 Quick user install:
 
 ```sh
-curl -fsSL https://github.com/taffish/taffish/releases/latest/download/install-taffish.sh | sh -s -- --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user
+```
+
+Pinned 0.2.0 install:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.2.0 --user
+```
+
+For users in China, the Gitee installer downloads from the Gitee mirror and can
+initialize the China mirror profile:
+
+```sh
+curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sh -s -- --user
 ```
 
 After `taf` is available locally, the usual starting point is:
@@ -64,6 +78,18 @@ taf install <app>
 taf info <app>
 taf list
 ```
+
+TAFFISH `0.2.0` also supports persistent mirror configuration:
+
+```sh
+taf config init --china --force
+taf update
+```
+
+The runtime config can change the index URL used by `taf update` and rewrite
+canonical GitHub app repository URLs during `taf install`, which makes Gitee or
+internal Git service mirrors possible without changing the official index
+schema.
 
 For a guided first run, read the
 [TAFFISH Quick Start](https://github.com/taffish/taffish-docs/blob/main/en/quick-start.en.md).

@@ -40,6 +40,7 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 - 通过 Apptainer、Podman 或 Docker backend 进行 container-aware 执行。
 - 基于 Hub index 的 app 发现、更新、安装和信息查询。
 - flow dependency 元数据，使 `taf install` 可以自动解析所需 app 版本。
+- 支持中国/Gitee 或内部 Git 服务镜像的运行时镜像配置。
 
 ## 安装入口
 
@@ -49,7 +50,19 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 快速用户级安装：
 
 ```sh
-curl -fsSL https://github.com/taffish/taffish/releases/latest/download/install-taffish.sh | sh -s -- --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user
+```
+
+固定安装 0.2.0：
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.2.0 --user
+```
+
+中国大陆用户可以使用 Gitee 安装器，从 Gitee 镜像下载并初始化中国镜像 profile：
+
+```sh
+curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sh -s -- --user
 ```
 
 本地可用 `taf` 之后，通常从这些命令开始：
@@ -62,6 +75,17 @@ taf install <app>
 taf info <app>
 taf list
 ```
+
+TAFFISH `0.2.0` 也支持持久化镜像配置：
+
+```sh
+taf config init --china --force
+taf update
+```
+
+运行时配置可以改变 `taf update` 使用的 index URL，并在 `taf install` 时重写
+canonical GitHub app 仓库 URL。因此可以在不改变官方 index schema 的情况下使用
+Gitee 或内部 Git 服务镜像。
 
 第一次使用可以阅读
 [TAFFISH 快速开始](https://github.com/taffish/taffish-docs/blob/main/zh/quick-start.cn.md)。
