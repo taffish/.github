@@ -99,7 +99,8 @@ taf info <app>
 taf list
 ```
 
-TAFFISH `0.3.0` also supports persistent mirror configuration:
+Persistent mirror configuration has been supported since TAFFISH `0.2.0`;
+the current recommended release is `0.3.0`:
 
 ```sh
 taf config init --china --force

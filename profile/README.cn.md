@@ -95,7 +95,7 @@ taf info <app>
 taf list
 ```
 
-TAFFISH `0.3.0` 也支持持久化镜像配置：
+持久化镜像配置从 TAFFISH `0.2.0` 开始支持；当前推荐版本是 `0.3.0`：
 
 ```sh
 taf config init --china --force
