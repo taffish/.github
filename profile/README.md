@@ -43,7 +43,7 @@ enough to make tools, environments, parameters, and workflows reusable.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
 - `taf publish --release`, backed by ignored `release.md` drafts for publish messages and GitHub Release notes.
 - Runtime mirror configuration for China/Gitee or internal Git service mirrors.
-- `taffish-mcp`, a conservative stdio MCP server for safe AI-client access to TAFFISH project, Hub, config, history, resource, and prompt operations.
+- `taffish-mcp`, a conservative stdio MCP server for safe AI-client access to TAFFISH project, Hub, config, history, resource, and prompt operations. See the [TAFFISH MCP Guide](https://github.com/taffish/taffish-docs/blob/main/en/taffish-mcp.en.md).
 
 ## Installation
 
