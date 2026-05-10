@@ -27,7 +27,7 @@ enough to make tools, environments, parameters, and workflows reusable.
 | --- | --- |
 | [taffish.com](https://taffish.com) | Official project homepage, project story, history, and public entry point. |
 | [TAFFISH Hub](https://taffish.github.io) | Browse available TAFFISH apps, tools, flows, versions, dependencies, and install commands. |
-| [taffish/taffish](https://github.com/taffish/taffish) | Binary distribution for the local `taf` and `taffish` commands; canonical installation entry point. |
+| [taffish/taffish](https://github.com/taffish/taffish) | Binary distribution for the local `taf`, `taffish`, and `taffish-mcp` commands; canonical installation entry point. |
 | [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | Documentation for TAFFISH, TAFFISH Hub, app projects, `.taf` scripts, containers, dependencies, and publishing. |
 | [taffish/taffish-index](https://github.com/taffish/taffish-index) | Generated static package index consumed by `taf update`, `taf search`, `taf info`, and `taf install`. |
 | [taffish/taffish.github.io](https://github.com/taffish/taffish.github.io) | Source repository for the web Hub. |
@@ -43,6 +43,7 @@ enough to make tools, environments, parameters, and workflows reusable.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
 - `taf publish --release`, backed by ignored `release.md` drafts for publish messages and GitHub Release notes.
 - Runtime mirror configuration for China/Gitee or internal Git service mirrors.
+- `taffish-mcp`, a conservative stdio MCP server for safe AI-client access to TAFFISH project, Hub, config, history, resource, and prompt operations.
 
 ## Installation
 
@@ -62,10 +63,10 @@ System install for shared servers:
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
 ```
 
-Pinned 0.3.0 install:
+Pinned 0.4.0 install:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.3.0 --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.4.0 --user
 ```
 
 For users in China, the Gitee installer downloads from the Gitee mirror and can
@@ -100,7 +101,7 @@ taf list
 ```
 
 Persistent mirror configuration has been supported since TAFFISH `0.2.0`;
-the current recommended release is `0.3.0`:
+the current recommended release is `0.4.0`:
 
 ```sh
 taf config init --china --force

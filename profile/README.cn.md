@@ -26,7 +26,7 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 | --- | --- |
 | [taffish.com](https://taffish.com) | 官方项目主页，用于展示项目故事、发展历史和公共入口。 |
 | [TAFFISH Hub](https://taffish.github.io) | 浏览当前可用的 TAFFISH apps、tools、flows、版本、依赖和安装命令。 |
-| [taffish/taffish](https://github.com/taffish/taffish) | 本地 `taf` 和 `taffish` 命令的二进制分发仓库，也是当前权威安装入口。 |
+| [taffish/taffish](https://github.com/taffish/taffish) | 本地 `taf`、`taffish` 和 `taffish-mcp` 命令的二进制分发仓库，也是当前权威安装入口。 |
 | [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | TAFFISH、TAFFISH Hub、app 项目、`.taf` 脚本、容器、依赖和发布流程文档。 |
 | [taffish/taffish-index](https://github.com/taffish/taffish-index) | 由自动化生成的静态包索引，供 `taf update`、`taf search`、`taf info` 和 `taf install` 使用。 |
 | [taffish/taffish.github.io](https://github.com/taffish/taffish.github.io) | 网页版 Hub 的源码仓库。 |
@@ -42,6 +42,7 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 - flow dependency 元数据，使 `taf install` 可以自动解析所需 app 版本。
 - `taf publish --release`，通过被 ignore 的 `release.md` 草稿提供发布 message 和 GitHub Release notes。
 - 支持中国/Gitee 或内部 Git 服务镜像的运行时镜像配置。
+- `taffish-mcp`，一个保守的 stdio MCP server，用于让 AI 客户端安全访问 TAFFISH project、Hub、config、history、resource 和 prompt 操作。
 
 ## 安装入口
 
@@ -60,10 +61,10 @@ curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/instal
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
 ```
 
-固定安装 0.3.0：
+固定安装 0.4.0：
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.3.0 --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.4.0 --user
 ```
 
 中国大陆用户可以使用 Gitee 安装器，从 Gitee 镜像下载并初始化中国镜像 profile：
@@ -95,7 +96,7 @@ taf info <app>
 taf list
 ```
 
-持久化镜像配置从 TAFFISH `0.2.0` 开始支持；当前推荐版本是 `0.3.0`：
+持久化镜像配置从 TAFFISH `0.2.0` 开始支持；当前推荐版本是 `0.4.0`：
 
 ```sh
 taf config init --china --force
