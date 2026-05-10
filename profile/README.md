@@ -35,7 +35,7 @@ enough to make tools, environments, parameters, and workflows reusable.
 
 ## What TAFFISH Provides
 
-- A small workflow language for composing bioinformatics tools and flows.
+- The TAFFISH DSL and its `taffish` compiler, which compile `.taf` scripts into shell scripts while preserving command-line composability.
 - `taf`, a local package manager and runner for TAFFISH apps.
 - Versioned app releases using the `version-release` form, such as `0.1.0-r1`.
 - Container-aware execution through Apptainer, Podman, or Docker backends.

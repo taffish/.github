@@ -34,7 +34,7 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 
 ## TAFFISH 提供什么
 
-- 一个用于组合生信工具和流程的小型 workflow language。
+- TAFFISH DSL 语言及其 `taffish` 编译器，用于把 `.taf` 脚本编译为 Shell 脚本，并保留命令行工具的组合能力。
 - `taf`，用于安装、更新、运行 TAFFISH apps 的本地包管理器与执行器。
 - 类似 `0.1.0-r1` 的 version-release 版本体系。
 - 通过 Apptainer、Podman 或 Docker backend 进行 container-aware 执行。
