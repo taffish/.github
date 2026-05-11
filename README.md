@@ -10,3 +10,8 @@ The profile is maintained in two files:
 
 - `profile/README.md`: English organization profile, rendered by GitHub.
 - `profile/README.cn.md`: Chinese translation linked from the English profile.
+
+## License
+
+The organization profile content in this repository is licensed under the
+[Creative Commons Attribution 4.0 International License](LICENSE) (CC BY 4.0).
