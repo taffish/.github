@@ -38,8 +38,10 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 - `taf`，用于安装、更新、运行 TAFFISH apps 的本地包管理器与执行器。
 - 类似 `0.1.0-r1` 的 version-release 版本体系。
 - 通过 Apptainer、Podman 或 Docker backend 进行 container-aware 执行。
+- 通过 `TAFFISH_CONTAINER_BACKEND` 为泛化容器标签提供运行时 backend 覆盖。
 - 基于 Hub index 的 app 发现、更新、安装和信息查询。
 - flow dependency 元数据，使 `taf install` 可以自动解析所需 app 版本。
+- 通过 `taf install --from` 安装尚未发布到公开 Hub 的私有/本地项目。
 - `taf publish --release`，通过被 ignore 的 `release.md` 草稿提供发布 message 和 GitHub Release notes。
 - 支持中国/Gitee 或内部 Git 服务镜像的运行时镜像配置。
 - 由安装器管理的 shell 自动补全文件和 Vim 语法文件，方便日常 CLI 使用和 `.taf` 编辑。
@@ -104,6 +106,10 @@ taf update
 运行时配置可以改变 `taf update` 使用的 index URL，并在 `taf install` 时重写
 canonical GitHub app 仓库 URL。因此可以在不改变官方 index schema 的情况下使用
 Gitee 或内部 Git 服务镜像。
+
+对于已经安装好的命令，可以用 `TAFFISH_CONTAINER_BACKEND=apptainer|podman|docker`
+在运行时强制泛化容器标签使用指定后端。对于尚未发布到公开 Hub 的私有/本地 app，
+可以使用 `taf install --from <PROJECT-DIR>`。
 
 第一次使用可以阅读
 [TAFFISH 快速开始](https://github.com/taffish/taffish-docs/blob/main/zh/quick-start.cn.md)。

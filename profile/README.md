@@ -39,8 +39,10 @@ enough to make tools, environments, parameters, and workflows reusable.
 - `taf`, a local package manager and runner for TAFFISH apps.
 - Versioned app releases using the `version-release` form, such as `0.1.0-r1`.
 - Container-aware execution through Apptainer, Podman, or Docker backends.
+- Runtime backend overrides for generic container tags through `TAFFISH_CONTAINER_BACKEND`.
 - Hub indexing so users can discover, update, install, and inspect apps from a static GitHub-hosted index.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
+- Private/local project installation through `taf install --from` for apps that are not yet published to the public Hub.
 - `taf publish --release`, backed by ignored `release.md` drafts for publish messages and GitHub Release notes.
 - Runtime mirror configuration for China/Gitee or internal Git service mirrors.
 - Installer-managed shell completion files and Vim syntax files for everyday CLI and `.taf` editing.
@@ -112,6 +114,10 @@ Runtime config can change the index URL used by `taf update` and rewrite
 canonical GitHub app repository URLs during `taf install`, which makes Gitee or
 internal Git service mirrors possible without changing the official index
 schema.
+
+For installed commands, `TAFFISH_CONTAINER_BACKEND=apptainer|podman|docker` can
+force generic container tags at runtime. For private or local apps that are not
+yet published to the public Hub, use `taf install --from <PROJECT-DIR>`.
 
 For a guided first run, read the
 [TAFFISH Quick Start](https://github.com/taffish/taffish-docs/blob/main/en/quick-start.en.md).
