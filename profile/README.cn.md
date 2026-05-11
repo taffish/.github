@@ -74,6 +74,11 @@ curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffis
 curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
 ```
 
+中国/Gitee 说明：Gitee 镜像用于缓解 GitHub raw 内容较慢或被阻断的问题。部分镜像服务
+可能限制大文件匿名 raw 下载，尤其是较大的 macOS 二进制文件。如果 Gitee 安装器无法
+获取二进制文件，可以使用可用网络/代理访问 GitHub 安装器，登录镜像后手动下载，或者查看
+当前 [taffish/taffish README](https://github.com/taffish/taffish) 中的说明。
+
 本地可用 `taf` 之后，通常从这些命令开始：
 
 ```sh

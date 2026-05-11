@@ -78,6 +78,13 @@ China/Gitee system install:
 curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
 ```
 
+China/Gitee note: the Gitee mirror is provided for environments where GitHub raw
+content is slow or blocked. Some mirror services may restrict anonymous raw
+downloads of large files, especially for larger macOS binaries. If the Gitee
+installer cannot fetch a binary, use the GitHub installer with a working
+network/proxy, download manually after logging in to the mirror, or check the
+current notes in the [taffish/taffish README](https://github.com/taffish/taffish).
+
 After `taf` is available locally, the usual starting point is:
 
 ```sh
