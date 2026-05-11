@@ -42,12 +42,13 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 - flow dependency 元数据，使 `taf install` 可以自动解析所需 app 版本。
 - `taf publish --release`，通过被 ignore 的 `release.md` 草稿提供发布 message 和 GitHub Release notes。
 - 支持中国/Gitee 或内部 Git 服务镜像的运行时镜像配置。
-- `taffish-mcp`，一个保守的 stdio MCP server，用于让 AI 客户端安全访问 TAFFISH project、Hub、config、history、resource 和 prompt 操作。详见 [TAFFISH MCP 指南](https://github.com/taffish/taffish-docs/blob/main/zh/taffish-mcp.cn.md) 和 [AI 客户端配置教程](https://github.com/taffish/taffish-docs/blob/main/zh/mcp-clients.cn.md)。
+- 由安装器管理的 shell 自动补全文件和 Vim 语法文件，方便日常 CLI 使用和 `.taf` 编辑。
+- `taffish-mcp`，一个保守的 stdio MCP server，用于让 AI 客户端安全访问 TAFFISH project、Hub、config、history、resource、prompt 和只读 TAF 编译器辅助操作。详见 [TAFFISH MCP 指南](https://github.com/taffish/taffish-docs/blob/main/zh/taffish-mcp.cn.md) 和 [AI 客户端配置教程](https://github.com/taffish/taffish-docs/blob/main/zh/mcp-clients.cn.md)。
 
 ## 安装入口
 
 请从 [taffish/taffish](https://github.com/taffish/taffish) 安装 TAFFISH CLI。
-该仓库是当前安装器、支持平台、运行依赖、容器 backend 说明和故障排查的权威入口。
+该仓库是当前安装器、支持平台、release 版本、运行依赖、容器 backend 说明、网络说明和故障排查的权威入口。
 
 快速用户级安装：
 
@@ -59,12 +60,6 @@ curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/instal
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
-```
-
-固定安装 0.4.0：
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.4.0 --user
 ```
 
 中国大陆用户可以使用 Gitee 安装器，从 Gitee 镜像下载并初始化中国镜像 profile：
@@ -79,12 +74,6 @@ curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffis
 curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
 ```
 
-macOS 用户注意：Gitee 可能会要求登录后才能匿名下载较大的 `raw` 二进制文件。如果
-Gitee 安装器在 macOS 上出现 `403` 或大文件需要登录的提示，这属于 Gitee raw 文件
-访问限制，不是 TAFFISH 安装器错误。这种情况下请使用 GitHub 安装方式并配置可用
-网络/代理，或者登录 Gitee 后手动下载对应的 macOS 二进制文件。Gitee 安装器目前
-更适合 Linux amd64 服务器；Linux 二进制文件较小，通常不受这个限制影响。
-
 本地可用 `taf` 之后，通常从这些命令开始：
 
 ```sh
@@ -96,7 +85,11 @@ taf info <app>
 taf list
 ```
 
-持久化镜像配置从 TAFFISH `0.2.0` 开始支持；当前推荐版本是 `0.4.0`：
+固定版本安装、平台依赖、Gitee/macOS 说明、离线安装、shell 自动补全、Vim 语法文件
+和详细故障排查，请以当前
+[taffish/taffish README](https://github.com/taffish/taffish) 为准。
+
+持久化镜像配置可以这样初始化：
 
 ```sh
 taf config init --china --force

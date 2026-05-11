@@ -43,13 +43,15 @@ enough to make tools, environments, parameters, and workflows reusable.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
 - `taf publish --release`, backed by ignored `release.md` drafts for publish messages and GitHub Release notes.
 - Runtime mirror configuration for China/Gitee or internal Git service mirrors.
-- `taffish-mcp`, a conservative stdio MCP server for safe AI-client access to TAFFISH project, Hub, config, history, resource, and prompt operations. See the [TAFFISH MCP Guide](https://github.com/taffish/taffish-docs/blob/main/en/taffish-mcp.en.md) and [AI client setup guide](https://github.com/taffish/taffish-docs/blob/main/en/mcp-clients.en.md).
+- Installer-managed shell completion files and Vim syntax files for everyday CLI and `.taf` editing.
+- `taffish-mcp`, a conservative stdio MCP server for safe AI-client access to TAFFISH project, Hub, config, history, resource, prompt, and read-only TAF compiler-helper operations. See the [TAFFISH MCP Guide](https://github.com/taffish/taffish-docs/blob/main/en/taffish-mcp.en.md) and [AI client setup guide](https://github.com/taffish/taffish-docs/blob/main/en/mcp-clients.en.md).
 
 ## Installation
 
 Install the TAFFISH CLI from [taffish/taffish](https://github.com/taffish/taffish).
 That repository is the canonical place for current installers, supported
-platforms, runtime dependencies, container backend notes, and troubleshooting.
+platforms, release versions, runtime dependencies, container backend notes,
+network notes, and troubleshooting.
 
 Quick user install:
 
@@ -61,12 +63,6 @@ System install for shared servers:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
-```
-
-Pinned 0.4.0 install:
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --version 0.4.0 --user
 ```
 
 For users in China, the Gitee installer downloads from the Gitee mirror and can
@@ -82,13 +78,6 @@ China/Gitee system install:
 curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
 ```
 
-macOS note: Gitee may require login for anonymous `raw` downloads of large
-binary files. If the Gitee installer fails on macOS with a `403` error or a
-large-file login message, use the GitHub installer with a working network/proxy,
-or log in to Gitee and download the macOS binary manually. The Gitee installer
-is currently most useful for Linux amd64 servers, whose binaries are much
-smaller and are usually unaffected.
-
 After `taf` is available locally, the usual starting point is:
 
 ```sh
@@ -100,15 +89,19 @@ taf info <app>
 taf list
 ```
 
-Persistent mirror configuration has been supported since TAFFISH `0.2.0`;
-the current recommended release is `0.4.0`:
+For a pinned release install, platform-specific requirements, Gitee/macOS notes,
+offline installation, shell completion, Vim syntax files, and detailed
+troubleshooting, use the current
+[taffish/taffish README](https://github.com/taffish/taffish).
+
+Persistent mirror configuration can be initialized with:
 
 ```sh
 taf config init --china --force
 taf update
 ```
 
-The runtime config can change the index URL used by `taf update` and rewrite
+Runtime config can change the index URL used by `taf update` and rewrite
 canonical GitHub app repository URLs during `taf install`, which makes Gitee or
 internal Git service mirrors possible without changing the official index
 schema.
