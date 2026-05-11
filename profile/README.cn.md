@@ -43,7 +43,7 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 - `taf publish --release`，通过被 ignore 的 `release.md` 草稿提供发布 message 和 GitHub Release notes。
 - 支持中国/Gitee 或内部 Git 服务镜像的运行时镜像配置。
 - 由安装器管理的 shell 自动补全文件和 Vim 语法文件，方便日常 CLI 使用和 `.taf` 编辑。
-- `taffish-mcp`，一个保守的 stdio MCP server，用于让 AI 客户端安全访问 TAFFISH project、Hub、config、history、resource、prompt 和只读 TAF 编译器辅助操作。详见 [TAFFISH MCP 指南](https://github.com/taffish/taffish-docs/blob/main/zh/taffish-mcp.cn.md) 和 [AI 客户端配置教程](https://github.com/taffish/taffish-docs/blob/main/zh/mcp-clients.cn.md)。
+- `taffish-mcp`，一个保守的 stdio MCP server，用于让 AI 客户端安全访问 TAFFISH project、app、Hub、config、history、resources、prompts、只读 TAF 编译器辅助工具，以及安全的 app/project 编译预览。详见 [TAFFISH MCP 指南](https://github.com/taffish/taffish-docs/blob/main/zh/taffish-mcp.cn.md) 和 [AI 客户端配置教程](https://github.com/taffish/taffish-docs/blob/main/zh/mcp-clients.cn.md)。
 
 ## 安装入口
 

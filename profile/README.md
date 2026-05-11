@@ -44,7 +44,7 @@ enough to make tools, environments, parameters, and workflows reusable.
 - `taf publish --release`, backed by ignored `release.md` drafts for publish messages and GitHub Release notes.
 - Runtime mirror configuration for China/Gitee or internal Git service mirrors.
 - Installer-managed shell completion files and Vim syntax files for everyday CLI and `.taf` editing.
-- `taffish-mcp`, a conservative stdio MCP server for safe AI-client access to TAFFISH project, Hub, config, history, resource, prompt, and read-only TAF compiler-helper operations. See the [TAFFISH MCP Guide](https://github.com/taffish/taffish-docs/blob/main/en/taffish-mcp.en.md) and [AI client setup guide](https://github.com/taffish/taffish-docs/blob/main/en/mcp-clients.en.md).
+- `taffish-mcp`, a conservative stdio MCP server for safe AI-client access to TAFFISH project, app, Hub, config, history, resources, prompts, read-only TAF compiler helpers, and safe app/project compile previews. See the [TAFFISH MCP Guide](https://github.com/taffish/taffish-docs/blob/main/en/taffish-mcp.en.md) and [AI client setup guide](https://github.com/taffish/taffish-docs/blob/main/en/mcp-clients.en.md).
 
 ## Installation
 
