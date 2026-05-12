@@ -26,8 +26,9 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 | --- | --- |
 | [taffish.com](https://taffish.com) | 官方项目主页，用于展示项目故事、发展历史和公共入口。 |
 | [TAFFISH Hub](https://taffish.github.io) | 浏览当前可用的 TAFFISH apps、tools、flows、版本、依赖和安装命令。 |
-| [taffish/taffish](https://github.com/taffish/taffish) | 本地 `taf`、`taffish` 和 `taffish-mcp` 命令的二进制分发仓库，也是当前权威安装入口。 |
+| [taffish/taffish](https://github.com/taffish/taffish) | TAFFISH 开源源码仓库，包含安装器、源码树开发文档，以及 `taf`、`taffish` 和 `taffish-mcp` 的二进制 release 载荷。 |
 | [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | TAFFISH、TAFFISH Hub、app 项目、`.taf` 脚本、容器、依赖和发布流程文档。 |
+| [TAFFISH 安全模型](https://github.com/taffish/taffish-docs/blob/main/zh/security-model.cn.md) | 面向 release、安装器、镜像、Hub/index gate、本地安装、容器和 MCP 的分层安全与可信模型。 |
 | [taffish/taffish-index](https://github.com/taffish/taffish-index) | 由自动化生成的静态包索引，供 `taf update`、`taf search`、`taf info` 和 `taf install` 使用。 |
 | [taffish/taffish.github.io](https://github.com/taffish/taffish.github.io) | 网页版 Hub 的源码仓库。 |
 | [taffish/.github](https://github.com/taffish/.github) | 当前组织首页仓库。 |
@@ -36,10 +37,13 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 
 - TAFFISH DSL 语言及其 `taffish` 编译器，用于把 `.taf` 脚本编译为 Shell 脚本，并保留命令行工具的组合能力。
 - `taf`，用于安装、更新、运行 TAFFISH apps 的本地包管理器与执行器。
+- 使用 Apache License 2.0 开源的 Common Lisp 实现，源码构建、贡献和安全说明位于 [taffish/taffish](https://github.com/taffish/taffish)。
+- 分层安全模型，覆盖 release 载荷校验、source commit 检查、容器 digest/platform 元数据、smoke gate 和保守 MCP 边界。
 - 类似 `0.1.0-r1` 的 version-release 版本体系。
 - 通过 Apptainer、Podman 或 Docker backend 进行 container-aware 执行。
 - 通过 `TAFFISH_CONTAINER_BACKEND` 为泛化容器标签提供运行时 backend 覆盖。
 - 基于 Hub index 的 app 发现、更新、安装和信息查询。
+- 面向容器化 app 的 smoke 元数据和 Hub 侧可信 gate，包括 index 中的容器 digest、平台元数据和 smoke 状态。
 - flow dependency 元数据，使 `taf install` 可以自动解析所需 app 版本。
 - 通过 `taf install --from` 安装尚未发布到公开 Hub 的私有/本地项目。
 - `taf publish --release`，通过被 ignore 的 `release.md` 草稿提供发布 message 和 GitHub Release notes。
@@ -50,7 +54,7 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 ## 安装入口
 
 请从 [taffish/taffish](https://github.com/taffish/taffish) 安装 TAFFISH CLI。
-该仓库是当前安装器、支持平台、release 版本、运行依赖、容器 backend 说明、网络说明和故障排查的权威入口。
+该仓库是源码、当前安装器、支持平台、release 版本、运行依赖、容器 backend 说明、网络说明、源码构建、release 校验和故障排查的权威入口。
 
 快速用户级安装：
 
@@ -96,6 +100,13 @@ taf list
 和详细故障排查，请以当前
 [taffish/taffish README](https://github.com/taffish/taffish) 为准。
 
+TAFFISH `0.8.0` 是本地 CLI/编译器的第一个开源版本。源码仓库已经包含
+[从源码构建](https://github.com/taffish/taffish/blob/main/docs/dev/zh-CN/build-from-source.md)、
+[贡献指南](https://github.com/taffish/taffish/blob/main/CONTRIBUTING.md)
+和 [安全策略](https://github.com/taffish/taffish/blob/main/SECURITY.md)。
+release 载荷也提供 `SHA256SUMS`、`SHA256SUMS.asc` 和
+`TAFFISH-RELEASE-KEY.asc`，用于手动校验 checksum 和 GPG 签名。
+
 持久化镜像配置可以这样初始化：
 
 ```sh
@@ -121,7 +132,7 @@ TAFFISH Hub 当前基于 GitHub 实现。
 1. 每个 app 都位于独立仓库，根目录包含 `taffish.toml`。
 2. app 仓库发布类似 `v0.1.0-r1` 的 release tag。
 3. app 仓库通过自己的 GitHub Actions workflow 构建容器镜像。
-4. [taffish-index](https://github.com/taffish/taffish-index) 扫描组织并生成静态 JSON 索引。
+4. [taffish-index](https://github.com/taffish/taffish-index) 扫描组织、校验新增版本、记录 digest/platform/smoke 元数据，并生成静态 JSON 索引。
 5. 用户执行 `taf update` 后，就可以在本地通过 `taf` 安装和运行 apps。
 
 [taffish.github.io](https://taffish.github.io) 是面向人的网页版 Hub；
@@ -137,7 +148,7 @@ TAFFISH Hub 当前基于 GitHub 实现。
 
 TAFFISH app 是结构化仓库，通常包含 `taffish.toml`、`src/main.taf`、
 `docs/help.md`、`target/` 构建产物、版本化 release tag，并且可以提供
-dependencies、platform、container 和 upstream source 等可选元数据。
+dependencies、platform、container、smoke checks、Hub trust status 和 upstream source 等可选元数据。
 
 官方 Hub 当前由 `taffish` 组织维护。现阶段，发布到官方 Hub 仅限组织成员。如果
 开发者希望贡献 app，可以联系维护者讨论加入组织或具体发布方式。
@@ -153,6 +164,8 @@ Xiaolong Li、Hao Lv 和 Hao Lin。
 
 ## 项目状态
 
-TAFFISH 正在积极开发中。当前公开基础设施主要基于 GitHub repositories、GitHub
-Actions、GitHub Packages、GitHub Pages 和静态 package index。未来也许会需要独立
-服务器版本的 Hub，但当前设计会优先保持发布和索引路径简单、透明、容易复现。
+TAFFISH 已经开源，并且仍在积极开发中。本地 CLI/编译器实现位于
+[taffish/taffish](https://github.com/taffish/taffish)，使用 Apache License 2.0
+授权。当前公开基础设施主要基于 GitHub repositories、GitHub Actions、GitHub
+Packages、GitHub Pages 和静态 package index。未来也许会需要独立服务器版本的
+Hub，但当前设计会优先保持发布和索引路径简单、透明、容易复现。

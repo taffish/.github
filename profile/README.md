@@ -27,8 +27,9 @@ enough to make tools, environments, parameters, and workflows reusable.
 | --- | --- |
 | [taffish.com](https://taffish.com) | Official project homepage, project story, history, and public entry point. |
 | [TAFFISH Hub](https://taffish.github.io) | Browse available TAFFISH apps, tools, flows, versions, dependencies, and install commands. |
-| [taffish/taffish](https://github.com/taffish/taffish) | Binary distribution for the local `taf`, `taffish`, and `taffish-mcp` commands; canonical installation entry point. |
+| [taffish/taffish](https://github.com/taffish/taffish) | Open-source TAFFISH source repository, installers, source-tree developer docs, and binary release payloads for `taf`, `taffish`, and `taffish-mcp`. |
 | [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | Documentation for TAFFISH, TAFFISH Hub, app projects, `.taf` scripts, containers, dependencies, and publishing. |
+| [TAFFISH Security Model](https://github.com/taffish/taffish-docs/blob/main/en/security-model.en.md) | Layered security and trust model for releases, installers, mirrors, Hub/index gates, local installs, containers, and MCP. |
 | [taffish/taffish-index](https://github.com/taffish/taffish-index) | Generated static package index consumed by `taf update`, `taf search`, `taf info`, and `taf install`. |
 | [taffish/taffish.github.io](https://github.com/taffish/taffish.github.io) | Source repository for the web Hub. |
 | [taffish/.github](https://github.com/taffish/.github) | This organization profile. |
@@ -37,10 +38,13 @@ enough to make tools, environments, parameters, and workflows reusable.
 
 - The TAFFISH DSL and its `taffish` compiler, which compile `.taf` scripts into shell scripts while preserving command-line composability.
 - `taf`, a local package manager and runner for TAFFISH apps.
+- Open-source Common Lisp implementation under Apache License 2.0, with source-build, contribution, and security documentation in [taffish/taffish](https://github.com/taffish/taffish).
+- A layered security model covering release payload verification, source commit checks, container digest/platform metadata, smoke gates, and conservative MCP boundaries.
 - Versioned app releases using the `version-release` form, such as `0.1.0-r1`.
 - Container-aware execution through Apptainer, Podman, or Docker backends.
 - Runtime backend overrides for generic container tags through `TAFFISH_CONTAINER_BACKEND`.
 - Hub indexing so users can discover, update, install, and inspect apps from a static GitHub-hosted index.
+- Smoke metadata and Hub-side trust gates for containerized apps, including container digest, platform metadata, and smoke status in the index.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
 - Private/local project installation through `taf install --from` for apps that are not yet published to the public Hub.
 - `taf publish --release`, backed by ignored `release.md` drafts for publish messages and GitHub Release notes.
@@ -51,9 +55,10 @@ enough to make tools, environments, parameters, and workflows reusable.
 ## Installation
 
 Install the TAFFISH CLI from [taffish/taffish](https://github.com/taffish/taffish).
-That repository is the canonical place for current installers, supported
-platforms, release versions, runtime dependencies, container backend notes,
-network notes, and troubleshooting.
+That repository is the canonical place for source code, current installers,
+supported platforms, release versions, runtime dependencies, container backend
+notes, network notes, source-build instructions, release verification, and
+troubleshooting.
 
 Quick user install:
 
@@ -103,6 +108,13 @@ offline installation, shell completion, Vim syntax files, and detailed
 troubleshooting, use the current
 [taffish/taffish README](https://github.com/taffish/taffish).
 
+TAFFISH `0.8.0` is the first open-source local CLI/compiler release. The
+source repository includes [Build From Source](https://github.com/taffish/taffish/blob/main/docs/dev/en/build-from-source.md),
+[Contributing](https://github.com/taffish/taffish/blob/main/CONTRIBUTING.md),
+and [Security Policy](https://github.com/taffish/taffish/blob/main/SECURITY.md)
+documents. The release payload also includes `SHA256SUMS`, `SHA256SUMS.asc`,
+and `TAFFISH-RELEASE-KEY.asc` for manual checksum and signature verification.
+
 Persistent mirror configuration can be initialized with:
 
 ```sh
@@ -129,7 +141,7 @@ TAFFISH Hub is currently GitHub-based.
 1. Each app lives in its own repository with a root `taffish.toml`.
 2. App repositories publish release tags such as `v0.1.0-r1`.
 3. App repositories build container images in their own GitHub Actions workflows.
-4. [taffish-index](https://github.com/taffish/taffish-index) scans the organization and writes static JSON index files.
+4. [taffish-index](https://github.com/taffish/taffish-index) scans the organization, validates new versions, records digest/platform/smoke metadata, and writes static JSON index files.
 5. Users run `taf update`, then install and run apps locally through `taf`.
 
 The public web Hub at [taffish.github.io](https://taffish.github.io) is the
@@ -148,7 +160,7 @@ syntax, container usage, and troubleshooting, read
 TAFFISH app projects are structured repositories with `taffish.toml`,
 `src/main.taf`, `docs/help.md`, `target/` build artifacts, versioned release
 tags, and optional metadata for dependencies, platform constraints, containers,
-and upstream software sources.
+smoke checks, Hub trust status, and upstream software sources.
 
 The official Hub is curated by the `taffish` organization. At the moment,
 publishing to the official Hub is limited to organization members. Developers
@@ -166,8 +178,10 @@ Xiaolong Li, Hao Lv, and Hao Lin.
 
 ## Project Status
 
-TAFFISH is under active development. The current public infrastructure is built
-around GitHub repositories, GitHub Actions, GitHub Packages, GitHub Pages, and a
-static package index. A dedicated server-backed Hub may become useful later, but
-the current design intentionally keeps the publishing and indexing path simple,
+TAFFISH is open source and under active development. The local CLI/compiler
+implementation is published in [taffish/taffish](https://github.com/taffish/taffish)
+under Apache License 2.0. The current public infrastructure is built around
+GitHub repositories, GitHub Actions, GitHub Packages, GitHub Pages, and a static
+package index. A dedicated server-backed Hub may become useful later, but the
+current design intentionally keeps the publishing and indexing path simple,
 auditable, and easy to reproduce.
