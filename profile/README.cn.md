@@ -100,11 +100,13 @@ taf list
 和详细故障排查，请以当前
 [taffish/taffish README](https://github.com/taffish/taffish) 为准。
 
-TAFFISH `0.8.0` 是本地 CLI/编译器的第一个开源版本。源码仓库已经包含
+TAFFISH `0.8.1` 是第一个开源 `0.8.x` 系列中的当前稳定 patch release。源码仓库已经包含
 [从源码构建](https://github.com/taffish/taffish/blob/main/docs/dev/zh-CN/build-from-source.md)、
 [贡献指南](https://github.com/taffish/taffish/blob/main/CONTRIBUTING.md)
 和 [安全策略](https://github.com/taffish/taffish/blob/main/SECURITY.md)。
-release 载荷也提供 `SHA256SUMS`、`SHA256SUMS.asc` 和
+`0.8.1` 保持 `0.8.0` 的公开接口稳定，修复 `taf publish --release` 对
+`release.md` 占位符的误判，补充可选 `[meta]` 和 `[upstream]` 元数据说明，
+并在 release 载荷中提供 `SHA256SUMS`、`SHA256SUMS.asc` 和
 `TAFFISH-RELEASE-KEY.asc`，用于手动校验 checksum 和 GPG 签名。
 
 持久化镜像配置可以这样初始化：

@@ -108,12 +108,15 @@ offline installation, shell completion, Vim syntax files, and detailed
 troubleshooting, use the current
 [taffish/taffish README](https://github.com/taffish/taffish).
 
-TAFFISH `0.8.0` is the first open-source local CLI/compiler release. The
-source repository includes [Build From Source](https://github.com/taffish/taffish/blob/main/docs/dev/en/build-from-source.md),
+TAFFISH `0.8.1` is the current stable patch release in the first open-source
+`0.8.x` series. The source repository includes [Build From Source](https://github.com/taffish/taffish/blob/main/docs/dev/en/build-from-source.md),
 [Contributing](https://github.com/taffish/taffish/blob/main/CONTRIBUTING.md),
 and [Security Policy](https://github.com/taffish/taffish/blob/main/SECURITY.md)
-documents. The release payload also includes `SHA256SUMS`, `SHA256SUMS.asc`,
-and `TAFFISH-RELEASE-KEY.asc` for manual checksum and signature verification.
+documents. The `0.8.1` release keeps the `0.8.0` public interface stable,
+fixes `release.md` placeholder detection in `taf publish --release`, documents
+optional `[meta]` and `[upstream]` metadata, and includes `SHA256SUMS`,
+`SHA256SUMS.asc`, and `TAFFISH-RELEASE-KEY.asc` for manual checksum and
+signature verification.
 
 Persistent mirror configuration can be initialized with:
 
