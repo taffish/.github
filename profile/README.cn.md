@@ -2,12 +2,14 @@
 
 [English](README.md) | [中文](README.cn.md)
 
-TAFFISH 是一个面向生物信息学工具与流程的开放生态，用于构建、分享和运行可复现
-的数据分析。它把版本化 app、容器化运行环境，以及一个轻量的 shell-native 工作流
-语言组合在一起。
+TAFFISH 将可复现性带回基于 Shell 的生物信息学命令。
 
-TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它尽量保持命令行的
-直接性，同时为工具、环境、参数和流程提供可复用的结构。
+TAFFISH 全称为 **Tools And Flows Framework Intensify SHell**。它是一个面向
+生物信息学命令行工具与轻量流程的 shell-native 可复现执行交付层。
+
+TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调用、参数、容器
+运行环境、元数据和版本化 release 转化为可安装、可分发、可组合、可验证的可执行
+包，同时仍然保持普通 shell 命令的使用形态。
 
 ## 目录
 
@@ -24,8 +26,9 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 
 | 资源 | 作用 |
 | --- | --- |
-| [taffish.com](https://taffish.com) | 官方项目主页，用于展示项目故事、发展历史和公共入口。 |
-| [TAFFISH Hub](https://taffish.github.io) | 浏览当前可用的 TAFFISH apps、tools、flows、版本、依赖和安装命令。 |
+| [taffish.com](https://taffish.com) | 官方项目主页，用于展示公开定位、项目故事、发展历史和公共入口。 |
+| [TAFFISH 是什么？](https://taffish.com/stories/positioning/) | 核心定位说明：把可复现性带回基于 Shell 的生物信息学命令。 |
+| [TAFFISH Hub](https://taffish.github.io) | 浏览当前可用的 TAFFISH 可执行包、apps、tools、flows、版本、依赖、可信元数据和安装命令。 |
 | [taffish/taffish](https://github.com/taffish/taffish) | TAFFISH 开源源码仓库，包含安装器、源码树开发文档，以及 `taf`、`taffish` 和 `taffish-mcp` 的二进制 release 载荷。 |
 | [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | TAFFISH、TAFFISH Hub、app 项目、`.taf` 脚本、容器、依赖和发布流程文档。 |
 | [TAFFISH 安全模型](https://github.com/taffish/taffish-docs/blob/main/zh/security-model.cn.md) | 面向 release、安装器、镜像、Hub/index gate、本地安装、容器和 MCP 的分层安全与可信模型。 |
@@ -35,8 +38,14 @@ TAFFISH 的定位介于临时 shell 脚本和重型 workflow 系统之间：它�
 
 ## TAFFISH 提供什么
 
+- 面向生物信息学命令行的 shell-native 可复现执行层，从用户已经在使用的 Shell
+  命令开始。
+- shell-native 可执行包模型，将工具调用转化为可版本化、可容器解析、可安装、可分发、
+  可组合、可验证的命令实体。
+- 面向生物信息学工具与轻量 flows 的命令级可复现性，从任务命令下方的执行层
+  补全 Nextflow、Snakemake 等 workflow 系统，而不是替代它们。
 - TAFFISH DSL 语言及其 `taffish` 编译器，用于把 `.taf` 脚本编译为 Shell 脚本，并保留命令行工具的组合能力。
-- `taf`，用于安装、更新、运行 TAFFISH apps 的本地包管理器与执行器。
+- `taf`，用于安装、更新、运行 TAFFISH 可执行包的本地包管理器、app 安装器与命令执行器。
 - 使用 Apache License 2.0 开源的 Common Lisp 实现，源码构建、贡献和安全说明位于 [taffish/taffish](https://github.com/taffish/taffish)。
 - 分层安全模型，覆盖 release 载荷校验、source commit 检查、容器 digest/platform 元数据、smoke gate 和保守 MCP 边界。
 - 类似 `0.1.0-r1` 的 version-release 版本体系。
@@ -129,12 +138,13 @@ Gitee 或内部 Git 服务镜像。
 
 ## TAFFISH Hub 如何运行
 
-TAFFISH Hub 当前基于 GitHub 实现。
+TAFFISH Hub 当前基于 GitHub 实现。它发布供本地 `taf` 命令消费的可执行包元数据，
+而不是在服务器上运行用户任务。
 
 1. 每个 app 都位于独立仓库，根目录包含 `taffish.toml`。
 2. app 仓库发布类似 `v0.1.0-r1` 的 release tag。
 3. app 仓库通过自己的 GitHub Actions workflow 构建容器镜像。
-4. [taffish-index](https://github.com/taffish/taffish-index) 扫描组织、校验新增版本、记录 digest/platform/smoke 元数据，并生成静态 JSON 索引。
+4. [taffish-index](https://github.com/taffish/taffish-index) 扫描组织、校验新增版本、记录依赖、平台、容器 digest、smoke、trust 和 upstream 元数据，并生成静态 JSON 索引。
 5. 用户执行 `taf update` 后，就可以在本地通过 `taf` 安装和运行 apps。
 
 [taffish.github.io](https://taffish.github.io) 是面向人的网页版 Hub；
@@ -142,13 +152,13 @@ TAFFISH Hub 当前基于 GitHub 实现。
 
 ## 面向用户
 
-可以通过 [TAFFISH Hub](https://taffish.github.io) 浏览可用 app，并在本地通过
+可以通过 [TAFFISH Hub](https://taffish.github.io) 浏览可用可执行包，并在本地通过
 `taf` 安装和运行它们。关于安装、CLI 行为、`.taf` 语法、容器使用和故障排查，请阅读
 [taffish/taffish-docs](https://github.com/taffish/taffish-docs)。
 
 ## 面向 App 开发者
 
-TAFFISH app 是结构化仓库，通常包含 `taffish.toml`、`src/main.taf`、
+TAFFISH app 是结构化的可执行包仓库，通常包含 `taffish.toml`、`src/main.taf`、
 `docs/help.md`、`target/` 构建产物、版本化 release tag，并且可以提供
 dependencies、platform、container、smoke checks、Hub trust status 和 upstream source 等可选元数据。
 

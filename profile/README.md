@@ -2,13 +2,16 @@
 
 [English](README.md) | [中文](README.cn.md)
 
-TAFFISH is an open bioinformatics tool and workflow ecosystem for building,
-sharing, and running reproducible analyses with versioned apps, containerized
-runtime environments, and a lightweight shell-native workflow language.
+TAFFISH brings reproducibility back to shell-based bioinformatics commands.
 
-It sits between ad-hoc shell scripts and heavyweight workflow systems: close
-enough to the command line for everyday bioinformatics work, but structured
-enough to make tools, environments, parameters, and workflows reusable.
+TAFFISH stands for **Tools And Flows Framework Intensify SHell**. It is a
+shell-native reproducible execution and delivery layer for bioinformatics
+command-line tools and lightweight workflows.
+
+TAFFISH does not try to replace shell scripting or existing workflow systems.
+Instead, it turns tool calls, parameters, container runtimes, metadata, and
+versioned releases into installable, distributable, composable, and verifiable
+executable packages that still behave like ordinary shell commands.
 
 ## Table of Contents
 
@@ -25,8 +28,9 @@ enough to make tools, environments, parameters, and workflows reusable.
 
 | Resource | Purpose |
 | --- | --- |
-| [taffish.com](https://taffish.com) | Official project homepage, project story, history, and public entry point. |
-| [TAFFISH Hub](https://taffish.github.io) | Browse available TAFFISH apps, tools, flows, versions, dependencies, and install commands. |
+| [taffish.com](https://taffish.com) | Official project homepage, public positioning, project story, history, and entry point. |
+| [What Is TAFFISH?](https://taffish.com/stories/positioning/) | Core positioning note: bringing reproducibility back to shell-based bioinformatics commands. |
+| [TAFFISH Hub](https://taffish.github.io) | Browse available TAFFISH executable packages, apps, tools, flows, versions, dependencies, trust metadata, and install commands. |
 | [taffish/taffish](https://github.com/taffish/taffish) | Open-source TAFFISH source repository, installers, source-tree developer docs, and binary release payloads for `taf`, `taffish`, and `taffish-mcp`. |
 | [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | Documentation for TAFFISH, TAFFISH Hub, app projects, `.taf` scripts, containers, dependencies, and publishing. |
 | [TAFFISH Security Model](https://github.com/taffish/taffish-docs/blob/main/en/security-model.en.md) | Layered security and trust model for releases, installers, mirrors, Hub/index gates, local installs, containers, and MCP. |
@@ -36,8 +40,16 @@ enough to make tools, environments, parameters, and workflows reusable.
 
 ## What TAFFISH Provides
 
+- A shell-native reproducible execution layer for command-line bioinformatics,
+  starting from the shell commands users already run.
+- A shell-native executable package model that turns tool invocations into
+  versioned, container-resolved, installable, distributable, composable, and
+  verifiable command entities.
+- Command-level reproducibility for bioinformatics tools and lightweight flows,
+  complementing workflow systems such as Nextflow and Snakemake from the layer
+  beneath their task commands rather than replacing them.
 - The TAFFISH DSL and its `taffish` compiler, which compile `.taf` scripts into shell scripts while preserving command-line composability.
-- `taf`, a local package manager and runner for TAFFISH apps.
+- `taf`, a local package manager, app installer, and command runner for TAFFISH executable packages.
 - Open-source Common Lisp implementation under Apache License 2.0, with source-build, contribution, and security documentation in [taffish/taffish](https://github.com/taffish/taffish).
 - A layered security model covering release payload verification, source commit checks, container digest/platform metadata, smoke gates, and conservative MCP boundaries.
 - Versioned app releases using the `version-release` form, such as `0.1.0-r1`.
@@ -139,12 +151,13 @@ For a guided first run, read the
 
 ## How TAFFISH Hub Works
 
-TAFFISH Hub is currently GitHub-based.
+TAFFISH Hub is currently GitHub-based. It publishes executable package metadata
+for local `taf` commands rather than running user jobs on a server.
 
 1. Each app lives in its own repository with a root `taffish.toml`.
 2. App repositories publish release tags such as `v0.1.0-r1`.
 3. App repositories build container images in their own GitHub Actions workflows.
-4. [taffish-index](https://github.com/taffish/taffish-index) scans the organization, validates new versions, records digest/platform/smoke metadata, and writes static JSON index files.
+4. [taffish-index](https://github.com/taffish/taffish-index) scans the organization, validates new versions, records dependency, platform, container digest, smoke, trust, and upstream metadata, and writes static JSON index files.
 5. Users run `taf update`, then install and run apps locally through `taf`.
 
 The public web Hub at [taffish.github.io](https://taffish.github.io) is the
@@ -153,17 +166,18 @@ machine-facing data source.
 
 ## For Users
 
-Use [TAFFISH Hub](https://taffish.github.io) to browse available apps and use
-`taf` locally to install and run them. For installation, CLI behavior, `.taf`
-syntax, container usage, and troubleshooting, read
+Use [TAFFISH Hub](https://taffish.github.io) to browse available executable
+packages and use `taf` locally to install and run them. For installation, CLI
+behavior, `.taf` syntax, container usage, and troubleshooting, read
 [taffish/taffish-docs](https://github.com/taffish/taffish-docs).
 
 ## For App Developers
 
-TAFFISH app projects are structured repositories with `taffish.toml`,
-`src/main.taf`, `docs/help.md`, `target/` build artifacts, versioned release
-tags, and optional metadata for dependencies, platform constraints, containers,
-smoke checks, Hub trust status, and upstream software sources.
+TAFFISH app projects are structured executable-package repositories with
+`taffish.toml`, `src/main.taf`, `docs/help.md`, `target/` build artifacts,
+versioned release tags, and optional metadata for dependencies, platform
+constraints, containers, smoke checks, Hub trust status, and upstream software
+sources.
 
 The official Hub is curated by the `taffish` organization. At the moment,
 publishing to the official Hub is limited to organization members. Developers
