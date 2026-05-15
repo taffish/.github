@@ -50,26 +50,20 @@ executable packages that still behave like ordinary shell commands.
   beneath their task commands rather than replacing them.
 - The TAFFISH DSL and its `taffish` compiler, which compile `.taf` scripts into shell scripts while preserving command-line composability.
 - `taf`, a local package manager, app installer, and command runner for TAFFISH executable packages.
-- Open-source Common Lisp implementation under Apache License 2.0, with source-build, contribution, and security documentation in [taffish/taffish](https://github.com/taffish/taffish).
-- A layered security model covering release payload verification, source commit checks, container digest/platform metadata, smoke gates, and conservative MCP boundaries.
-- Versioned app releases using the `version-release` form, such as `0.1.0-r1`.
-- Container-aware execution through Apptainer, Podman, or Docker backends.
-- Runtime backend overrides for generic container tags through `TAFFISH_CONTAINER_BACKEND`.
-- Backend-specific container runtime arguments in `.taf` tags through
-  `$@[target: args]`, for app requirements such as GPU flags, host networking,
-  or backend-specific devices.
-- Local backend runtime-argument environment variables:
-  `TAFFISH_DOCKER_RUN_ARGS`, `TAFFISH_PODMAN_RUN_ARGS`, and
-  `TAFFISH_APPTAINER_RUN_ARGS`, for per-run or site-specific policies that are
-  not part of the app implementation.
-- Hub indexing so users can discover, update, install, and inspect apps from a static GitHub-hosted index.
-- Smoke metadata and Hub-side trust gates for containerized apps, including container digest, platform metadata, and smoke status in the index.
-- Flow dependency metadata so `taf install` can resolve required app versions automatically.
-- Private/local project installation through `taf install --from` for apps that are not yet published to the public Hub.
-- `taf publish --release`, backed by ignored `release.md` drafts for publish messages and GitHub Release notes.
-- Runtime mirror configuration for China/Gitee or internal Git service mirrors.
-- Installer-managed shell completion files and Vim syntax files for everyday CLI and `.taf` editing.
-- `taffish-mcp`, a conservative stdio MCP server for safe AI-client access to TAFFISH project, app, Hub, config, history, resources, prompts, read-only TAF compiler helpers, and safe app/project compile previews. See the [TAFFISH MCP Guide](https://github.com/taffish/taffish-docs/blob/main/en/taffish-mcp.en.md) and [AI client setup guide](https://github.com/taffish/taffish-docs/blob/main/en/mcp-clients.en.md).
+- TAFFISH Hub, a GitHub-based executable package ecosystem that lets users
+  discover, update, install, inspect, and run apps locally.
+- Container-aware execution through Docker, Podman, or Apptainer while keeping
+  TAFFISH commands usable as ordinary shell commands.
+- App metadata for versions, dependencies, platforms, containers, upstream
+  sources, smoke checks, and Hub trust signals.
+- `taffish-mcp`, a conservative MCP server that lets AI clients inspect
+  TAFFISH projects and compile candidate commands without running containers.
+- An open-source Common Lisp implementation under Apache License 2.0.
+
+For detailed CLI behavior, `.taf` syntax, container runtime options, mirrors,
+MCP setup, security details, source builds, and release-specific changes, use
+[taffish/taffish-docs](https://github.com/taffish/taffish-docs) and the
+[taffish/taffish README](https://github.com/taffish/taffish).
 
 ## Installation
 
@@ -122,39 +116,11 @@ taf info <app>
 taf list
 ```
 
-For a pinned release install, platform-specific requirements, Gitee/macOS notes,
-offline installation, shell completion, Vim syntax files, and detailed
-troubleshooting, use the current
-[taffish/taffish README](https://github.com/taffish/taffish).
-
-TAFFISH `0.9.0` is the current public release. The source repository includes [Build From Source](https://github.com/taffish/taffish/blob/main/docs/dev/en/build-from-source.md),
-[Contributing](https://github.com/taffish/taffish/blob/main/CONTRIBUTING.md),
-and [Security Policy](https://github.com/taffish/taffish/blob/main/SECURITY.md)
-documents. The `0.9.0` release adds structured backend-specific container
-runtime arguments, local backend runtime-argument environment variables,
-external binary-level tests, refreshed release payloads, and `SHA256SUMS`,
-`SHA256SUMS.asc`, and `TAFFISH-RELEASE-KEY.asc` for manual checksum and
-signature verification.
-
-Persistent mirror configuration can be initialized with:
-
-```sh
-taf config init --china --force
-taf update
-```
-
-Runtime config can change the index URL used by `taf update` and rewrite
-canonical GitHub app repository URLs during `taf install`, which makes Gitee or
-internal Git service mirrors possible without changing the official index
-schema.
-
-For installed commands, `TAFFISH_CONTAINER_BACKEND=apptainer|podman|docker` can
-force generic container tags at runtime. App-specific runtime needs should live
-in the `.taf` container tag with `$@[target: args]`; one-off machine, site, GPU,
-or platform policies should use `TAFFISH_DOCKER_RUN_ARGS`,
-`TAFFISH_PODMAN_RUN_ARGS`, or `TAFFISH_APPTAINER_RUN_ARGS`. For private or
-local apps that are not yet published to the public Hub, use
-`taf install --from <PROJECT-DIR>`.
+For pinned releases, platform-specific requirements, China/Gitee notes, mirror
+configuration, source builds, release verification, container backend behavior,
+private/local app installs, and troubleshooting, use the current
+[taffish/taffish README](https://github.com/taffish/taffish) and
+[TAFFISH documentation](https://github.com/taffish/taffish-docs).
 
 For a guided first run, read the
 [TAFFISH Quick Start](https://github.com/taffish/taffish-docs/blob/main/en/quick-start.en.md).

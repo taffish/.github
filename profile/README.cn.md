@@ -46,25 +46,20 @@ TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调�
   补全 Nextflow、Snakemake 等 workflow 系统，而不是替代它们。
 - TAFFISH DSL 语言及其 `taffish` 编译器，用于把 `.taf` 脚本编译为 Shell 脚本，并保留命令行工具的组合能力。
 - `taf`，用于安装、更新、运行 TAFFISH 可执行包的本地包管理器、app 安装器与命令执行器。
-- 使用 Apache License 2.0 开源的 Common Lisp 实现，源码构建、贡献和安全说明位于 [taffish/taffish](https://github.com/taffish/taffish)。
-- 分层安全模型，覆盖 release 载荷校验、source commit 检查、容器 digest/platform 元数据、smoke gate 和保守 MCP 边界。
-- 类似 `0.1.0-r1` 的 version-release 版本体系。
-- 通过 Apptainer、Podman 或 Docker backend 进行 container-aware 执行。
-- 通过 `TAFFISH_CONTAINER_BACKEND` 为泛化容器标签提供运行时 backend 覆盖。
-- 在 `.taf` 标签中通过 `$@[target: args]` 提供 backend-specific container
-  runtime arguments，用于 GPU 参数、host network、backend-specific device
-  等 app 自身运行需求。
-- 通过 `TAFFISH_DOCKER_RUN_ARGS`、`TAFFISH_PODMAN_RUN_ARGS` 和
-  `TAFFISH_APPTAINER_RUN_ARGS` 追加本机 backend runtime 参数，用于单次运行、
-  站点或机器策略，而不是 app 实现语义。
-- 基于 Hub index 的 app 发现、更新、安装和信息查询。
-- 面向容器化 app 的 smoke 元数据和 Hub 侧可信 gate，包括 index 中的容器 digest、平台元数据和 smoke 状态。
-- flow dependency 元数据，使 `taf install` 可以自动解析所需 app 版本。
-- 通过 `taf install --from` 安装尚未发布到公开 Hub 的私有/本地项目。
-- `taf publish --release`，通过被 ignore 的 `release.md` 草稿提供发布 message 和 GitHub Release notes。
-- 支持中国/Gitee 或内部 Git 服务镜像的运行时镜像配置。
-- 由安装器管理的 shell 自动补全文件和 Vim 语法文件，方便日常 CLI 使用和 `.taf` 编辑。
-- `taffish-mcp`，一个保守的 stdio MCP server，用于让 AI 客户端安全访问 TAFFISH project、app、Hub、config、history、resources、prompts、只读 TAF 编译器辅助工具，以及安全的 app/project 编译预览。详见 [TAFFISH MCP 指南](https://github.com/taffish/taffish-docs/blob/main/zh/taffish-mcp.cn.md) 和 [AI 客户端配置教程](https://github.com/taffish/taffish-docs/blob/main/zh/mcp-clients.cn.md)。
+- TAFFISH Hub，一个基于 GitHub 的可执行包生态，让用户可以发现、更新、安装、
+  查询并在本地运行 apps。
+- 通过 Docker、Podman 或 Apptainer 进行 container-aware 执行，同时让 TAFFISH
+  命令保持普通 shell 命令的使用形态。
+- 面向版本、依赖、平台、容器、上游来源、smoke checks 和 Hub trust signals 的
+  app 元数据。
+- `taffish-mcp`，一个保守的 MCP server，让 AI 客户端可以检查 TAFFISH 项目，
+  并在不运行容器的前提下编译候选命令。
+- 使用 Apache License 2.0 开源的 Common Lisp 实现。
+
+详细 CLI 行为、`.taf` 语法、容器运行参数、镜像配置、MCP 接入、安全细节、
+源码构建和具体 release 变化，请阅读
+[taffish/taffish-docs](https://github.com/taffish/taffish-docs) 和
+[taffish/taffish README](https://github.com/taffish/taffish)。
 
 ## 安装入口
 
@@ -111,36 +106,10 @@ taf info <app>
 taf list
 ```
 
-固定版本安装、平台依赖、Gitee/macOS 说明、离线安装、shell 自动补全、Vim 语法文件
-和详细故障排查，请以当前
-[taffish/taffish README](https://github.com/taffish/taffish) 为准。
-
-TAFFISH `0.9.0` 是当前公开 release。源码仓库已经包含
-[从源码构建](https://github.com/taffish/taffish/blob/main/docs/dev/zh-CN/build-from-source.md)、
-[贡献指南](https://github.com/taffish/taffish/blob/main/CONTRIBUTING.md)
-和 [安全策略](https://github.com/taffish/taffish/blob/main/SECURITY.md)。
-`0.9.0` 增加了结构化 backend-specific container runtime arguments、本机
-backend runtime 参数环境变量、外部 binary-level 测试，并刷新 release 载荷；
-release 中继续提供 `SHA256SUMS`、`SHA256SUMS.asc` 和
-`TAFFISH-RELEASE-KEY.asc`，用于手动校验 checksum 和 GPG 签名。
-
-持久化镜像配置可以这样初始化：
-
-```sh
-taf config init --china --force
-taf update
-```
-
-运行时配置可以改变 `taf update` 使用的 index URL，并在 `taf install` 时重写
-canonical GitHub app 仓库 URL。因此可以在不改变官方 index schema 的情况下使用
-Gitee 或内部 Git 服务镜像。
-
-对于已经安装好的命令，可以用 `TAFFISH_CONTAINER_BACKEND=apptainer|podman|docker`
-在运行时强制泛化容器标签使用指定后端。app 自身需要的 runtime 参数应写入
-`.taf` 容器标签中的 `$@[target: args]`；单次运行、站点、机器、GPU 或平台策略则使用
-`TAFFISH_DOCKER_RUN_ARGS`、`TAFFISH_PODMAN_RUN_ARGS` 或
-`TAFFISH_APPTAINER_RUN_ARGS`。对于尚未发布到公开 Hub 的私有/本地 app，
-可以使用 `taf install --from <PROJECT-DIR>`。
+固定版本安装、平台依赖、中国/Gitee 说明、镜像配置、源码构建、release 校验、
+容器 backend 行为、私有/本地 app 安装和详细故障排查，请以当前
+[taffish/taffish README](https://github.com/taffish/taffish) 和
+[TAFFISH 文档](https://github.com/taffish/taffish-docs) 为准。
 
 第一次使用可以阅读
 [TAFFISH 快速开始](https://github.com/taffish/taffish-docs/blob/main/zh/quick-start.cn.md)。
