@@ -55,6 +55,13 @@ executable packages that still behave like ordinary shell commands.
 - Versioned app releases using the `version-release` form, such as `0.1.0-r1`.
 - Container-aware execution through Apptainer, Podman, or Docker backends.
 - Runtime backend overrides for generic container tags through `TAFFISH_CONTAINER_BACKEND`.
+- Backend-specific container runtime arguments in `.taf` tags through
+  `$@[target: args]`, for app requirements such as GPU flags, host networking,
+  or backend-specific devices.
+- Local backend runtime-argument environment variables:
+  `TAFFISH_DOCKER_RUN_ARGS`, `TAFFISH_PODMAN_RUN_ARGS`, and
+  `TAFFISH_APPTAINER_RUN_ARGS`, for per-run or site-specific policies that are
+  not part of the app implementation.
 - Hub indexing so users can discover, update, install, and inspect apps from a static GitHub-hosted index.
 - Smoke metadata and Hub-side trust gates for containerized apps, including container digest, platform metadata, and smoke status in the index.
 - Flow dependency metadata so `taf install` can resolve required app versions automatically.
@@ -120,13 +127,12 @@ offline installation, shell completion, Vim syntax files, and detailed
 troubleshooting, use the current
 [taffish/taffish README](https://github.com/taffish/taffish).
 
-TAFFISH `0.8.1` is the current stable patch release in the first open-source
-`0.8.x` series. The source repository includes [Build From Source](https://github.com/taffish/taffish/blob/main/docs/dev/en/build-from-source.md),
+TAFFISH `0.9.0` is the current public release. The source repository includes [Build From Source](https://github.com/taffish/taffish/blob/main/docs/dev/en/build-from-source.md),
 [Contributing](https://github.com/taffish/taffish/blob/main/CONTRIBUTING.md),
 and [Security Policy](https://github.com/taffish/taffish/blob/main/SECURITY.md)
-documents. The `0.8.1` release keeps the `0.8.0` public interface stable,
-fixes `release.md` placeholder detection in `taf publish --release`, documents
-optional `[meta]` and `[upstream]` metadata, and includes `SHA256SUMS`,
+documents. The `0.9.0` release adds structured backend-specific container
+runtime arguments, local backend runtime-argument environment variables,
+external binary-level tests, refreshed release payloads, and `SHA256SUMS`,
 `SHA256SUMS.asc`, and `TAFFISH-RELEASE-KEY.asc` for manual checksum and
 signature verification.
 
@@ -143,8 +149,12 @@ internal Git service mirrors possible without changing the official index
 schema.
 
 For installed commands, `TAFFISH_CONTAINER_BACKEND=apptainer|podman|docker` can
-force generic container tags at runtime. For private or local apps that are not
-yet published to the public Hub, use `taf install --from <PROJECT-DIR>`.
+force generic container tags at runtime. App-specific runtime needs should live
+in the `.taf` container tag with `$@[target: args]`; one-off machine, site, GPU,
+or platform policies should use `TAFFISH_DOCKER_RUN_ARGS`,
+`TAFFISH_PODMAN_RUN_ARGS`, or `TAFFISH_APPTAINER_RUN_ARGS`. For private or
+local apps that are not yet published to the public Hub, use
+`taf install --from <PROJECT-DIR>`.
 
 For a guided first run, read the
 [TAFFISH Quick Start](https://github.com/taffish/taffish-docs/blob/main/en/quick-start.en.md).

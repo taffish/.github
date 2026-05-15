@@ -51,6 +51,12 @@ TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调�
 - 类似 `0.1.0-r1` 的 version-release 版本体系。
 - 通过 Apptainer、Podman 或 Docker backend 进行 container-aware 执行。
 - 通过 `TAFFISH_CONTAINER_BACKEND` 为泛化容器标签提供运行时 backend 覆盖。
+- 在 `.taf` 标签中通过 `$@[target: args]` 提供 backend-specific container
+  runtime arguments，用于 GPU 参数、host network、backend-specific device
+  等 app 自身运行需求。
+- 通过 `TAFFISH_DOCKER_RUN_ARGS`、`TAFFISH_PODMAN_RUN_ARGS` 和
+  `TAFFISH_APPTAINER_RUN_ARGS` 追加本机 backend runtime 参数，用于单次运行、
+  站点或机器策略，而不是 app 实现语义。
 - 基于 Hub index 的 app 发现、更新、安装和信息查询。
 - 面向容器化 app 的 smoke 元数据和 Hub 侧可信 gate，包括 index 中的容器 digest、平台元数据和 smoke 状态。
 - flow dependency 元数据，使 `taf install` 可以自动解析所需 app 版本。
@@ -109,13 +115,13 @@ taf list
 和详细故障排查，请以当前
 [taffish/taffish README](https://github.com/taffish/taffish) 为准。
 
-TAFFISH `0.8.1` 是第一个开源 `0.8.x` 系列中的当前稳定 patch release。源码仓库已经包含
+TAFFISH `0.9.0` 是当前公开 release。源码仓库已经包含
 [从源码构建](https://github.com/taffish/taffish/blob/main/docs/dev/zh-CN/build-from-source.md)、
 [贡献指南](https://github.com/taffish/taffish/blob/main/CONTRIBUTING.md)
 和 [安全策略](https://github.com/taffish/taffish/blob/main/SECURITY.md)。
-`0.8.1` 保持 `0.8.0` 的公开接口稳定，修复 `taf publish --release` 对
-`release.md` 占位符的误判，补充可选 `[meta]` 和 `[upstream]` 元数据说明，
-并在 release 载荷中提供 `SHA256SUMS`、`SHA256SUMS.asc` 和
+`0.9.0` 增加了结构化 backend-specific container runtime arguments、本机
+backend runtime 参数环境变量、外部 binary-level 测试，并刷新 release 载荷；
+release 中继续提供 `SHA256SUMS`、`SHA256SUMS.asc` 和
 `TAFFISH-RELEASE-KEY.asc`，用于手动校验 checksum 和 GPG 签名。
 
 持久化镜像配置可以这样初始化：
@@ -130,7 +136,10 @@ canonical GitHub app 仓库 URL。因此可以在不改变官方 index schema �
 Gitee 或内部 Git 服务镜像。
 
 对于已经安装好的命令，可以用 `TAFFISH_CONTAINER_BACKEND=apptainer|podman|docker`
-在运行时强制泛化容器标签使用指定后端。对于尚未发布到公开 Hub 的私有/本地 app，
+在运行时强制泛化容器标签使用指定后端。app 自身需要的 runtime 参数应写入
+`.taf` 容器标签中的 `$@[target: args]`；单次运行、站点、机器、GPU 或平台策略则使用
+`TAFFISH_DOCKER_RUN_ARGS`、`TAFFISH_PODMAN_RUN_ARGS` 或
+`TAFFISH_APPTAINER_RUN_ARGS`。对于尚未发布到公开 Hub 的私有/本地 app，
 可以使用 `taf install --from <PROJECT-DIR>`。
 
 第一次使用可以阅读
