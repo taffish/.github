@@ -47,7 +47,7 @@ TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调�
 - TAFFISH DSL 语言及其 `taffish` 编译器，用于把 `.taf` 脚本编译为 Shell 脚本，并保留命令行工具的组合能力。
 - `taf`，用于安装、更新、运行 TAFFISH 可执行包的本地包管理器、app 安装器与命令执行器。
 - TAFFISH Hub，一个基于 GitHub 的可执行包生态，让用户可以发现、更新、安装、
-  查询并在本地运行 apps。
+  查询、维护并在本地运行 apps。
 - 通过 Docker、Podman 或 Apptainer 进行 container-aware 执行，同时让 TAFFISH
   命令保持普通 shell 命令的使用形态。
 - 面向版本、依赖、平台、容器、上游来源、smoke checks 和 Hub trust signals 的
@@ -103,6 +103,8 @@ taf update
 taf search <keyword>
 taf install <app>
 taf info <app>
+taf outdated
+taf upgrade
 taf list
 ```
 

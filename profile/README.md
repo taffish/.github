@@ -51,7 +51,7 @@ executable packages that still behave like ordinary shell commands.
 - The TAFFISH DSL and its `taffish` compiler, which compile `.taf` scripts into shell scripts while preserving command-line composability.
 - `taf`, a local package manager, app installer, and command runner for TAFFISH executable packages.
 - TAFFISH Hub, a GitHub-based executable package ecosystem that lets users
-  discover, update, install, inspect, and run apps locally.
+  discover, update, install, inspect, maintain, and run apps locally.
 - Container-aware execution through Docker, Podman, or Apptainer while keeping
   TAFFISH commands usable as ordinary shell commands.
 - App metadata for versions, dependencies, platforms, containers, upstream
@@ -113,6 +113,8 @@ taf update
 taf search <keyword>
 taf install <app>
 taf info <app>
+taf outdated
+taf upgrade
 taf list
 ```
 
