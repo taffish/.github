@@ -14,6 +14,7 @@ TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调�
 ## 目录
 
 - [主要入口](#主要入口)
+- [代表性 Flow 案例](#代表性-flow-案例)
 - [TAFFISH 提供什么](#taffish-提供什么)
 - [安装入口](#安装入口)
 - [TAFFISH Hub 如何运行](#taffish-hub-如何运行)
@@ -29,12 +30,27 @@ TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调�
 | [taffish.com](https://taffish.com) | 官方项目主页，用于展示公开定位、项目故事、发展历史和公共入口。 |
 | [TAFFISH 是什么？](https://taffish.com/stories/positioning/) | 核心定位说明：把可复现性带回基于 Shell 的生物信息学命令。 |
 | [TAFFISH Hub](https://taffish.github.io) | 浏览当前可用的 TAFFISH 可执行包、apps、tools、flows、版本、依赖、可信元数据和安装命令。 |
+| [RNA-seq Flow Family](https://taffish.github.io/rnaseq-flows/) | 第一个完整公开的 TAFFISH flow family 门户，包含流程手册和可在线查看的 yeast SNF2 示例报告。 |
 | [taffish/taffish](https://github.com/taffish/taffish) | TAFFISH 开源源码仓库，包含安装器、源码树开发文档，以及 `taf`、`taffish` 和 `taffish-mcp` 的二进制 release 载荷。 |
 | [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | TAFFISH、TAFFISH Hub、app 项目、`.taf` 脚本、容器、依赖和发布流程文档。 |
 | [TAFFISH 安全模型](https://github.com/taffish/taffish-docs/blob/main/zh/security-model.cn.md) | 面向 release、安装器、镜像、Hub/index gate、本地安装、容器和 MCP 的分层安全与可信模型。 |
 | [taffish/taffish-index](https://github.com/taffish/taffish-index) | 由自动化生成的静态包索引，供 `taf update`、`taf search`、`taf info` 和 `taf install` 使用。 |
 | [taffish/taffish.github.io](https://github.com/taffish/taffish.github.io) | 网页版 Hub 的源码仓库。 |
 | [taffish/.github](https://github.com/taffish/.github) | 当前组织首页仓库。 |
+
+## 代表性 Flow 案例
+
+[TAFFISH RNA-seq Flow Family](https://taffish.github.io/rnaseq-flows/) 是第一个
+完整公开的 TAFFISH flow family 案例。它展示了可版本化命令包如何组合成
+shell-native、可审计的分析路线，同时不把 TAFFISH 写成传统 workflow engine。
+
+这个门户包含：
+
+- 参考构建、表达定量、差异表达、富集分析、可选比对/计数/QC 证据分支和报告的
+  flow-family 地图；
+- 每个 flow 的输入表、参数、输出和连接说明；
+- 由标准 RNA-seq 路线生成的
+  [yeast SNF2 在线报告](https://taffish.github.io/rnaseq-flows/examples/yeast-standard-report/04_reports/rnaseq_report.html)。
 
 ## TAFFISH 提供什么
 
