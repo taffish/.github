@@ -14,7 +14,7 @@ TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调�
 ## 目录
 
 - [主要入口](#主要入口)
-- [代表性 Flow 案例](#代表性-flow-案例)
+- [Flow 门户与案例](#flow-门户与案例)
 - [TAFFISH 提供什么](#taffish-提供什么)
 - [安装入口](#安装入口)
 - [TAFFISH Hub 如何运行](#taffish-hub-如何运行)
@@ -30,47 +30,32 @@ TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调�
 | [taffish.com](https://taffish.com) | 官方项目主页，用于展示公开定位、项目故事、发展历史和公共入口。 |
 | [TAFFISH 是什么？](https://taffish.com/stories/positioning/) | 核心定位说明：把可复现性带回基于 Shell 的生物信息学命令。 |
 | [TAFFISH Hub](https://taffish.github.io) | 浏览当前可用的 TAFFISH 可执行包、apps、tools、flows、版本、依赖、可信元数据和安装命令。 |
-| [RNA-seq Flow Family](https://taffish.github.io/rnaseq-flows/) | 第一个完整公开的 TAFFISH flow family 门户，包含流程手册和可在线查看的 yeast SNF2 示例报告。 |
+| [TAFFISH Flow Portal](https://taffish.github.io/flows/) | 官方 TAFFISH flow family、路线页面、示例和面向人的 flow 文档入口。 |
 | [taffish/taffish](https://github.com/taffish/taffish) | TAFFISH 开源源码仓库，包含安装器、源码树开发文档，以及 `taf`、`taffish` 和 `taffish-mcp` 的二进制 release 载荷。 |
 | [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | TAFFISH、TAFFISH Hub、app 项目、`.taf` 脚本、容器、依赖和发布流程文档。 |
-| [TAFFISH 安全模型](https://github.com/taffish/taffish-docs/blob/main/zh/security-model.cn.md) | 面向 release、安装器、镜像、Hub/index gate、本地安装、容器和 MCP 的分层安全与可信模型。 |
-| [taffish/taffish-index](https://github.com/taffish/taffish-index) | 由自动化生成的静态包索引，供 `taf update`、`taf search`、`taf info` 和 `taf install` 使用。 |
-| [taffish/taffish.github.io](https://github.com/taffish/taffish.github.io) | 网页版 Hub 的源码仓库。 |
-| [taffish/.github](https://github.com/taffish/.github) | 当前组织首页仓库。 |
 
-## 代表性 Flow 案例
+## Flow 门户与案例
 
-[TAFFISH RNA-seq Flow Family](https://taffish.github.io/rnaseq-flows/) 是第一个
-完整公开的 TAFFISH flow family 案例。它展示了可版本化命令包如何组合成
-shell-native、可审计的分析路线，同时不把 TAFFISH 写成传统 workflow engine。
+[TAFFISH Flow Portal](https://taffish.github.io/flows/) 是官方 flow family
+面向人的统一入口。它把由可安装 TAFFISH 命令包组成的问题导向路线组织成地图；
+真正执行仍然来自普通 `taf-*` 命令和明确的输入/输出契约。
 
-这个门户包含：
+这个门户链接：
 
-- 参考构建、表达定量、差异表达、富集分析、可选比对/计数/QC 证据分支和报告的
-  flow-family 地图；
-- 每个 flow 的输入表、参数、输出和连接说明；
-- 由标准 RNA-seq 路线生成的
-  [yeast SNF2 在线报告](https://taffish.github.io/rnaseq-flows/examples/yeast-standard-report/04_reports/rnaseq_report.html)。
+- RNA-seq、NGS QC、BAM QC、BLAST 和系统发育等官方路线家族；
+- 成熟路线对应的 flow 专题页面和示例报告；
+- 更深入的 [RNA-seq Flow Family](https://taffish.github.io/rnaseq-flows/)
+  专题站，它仍然是当前最完整的公开 flow-family 案例。
 
 ## TAFFISH 提供什么
 
-- 面向生物信息学命令行的 shell-native 可复现执行层，从用户已经在使用的 Shell
-  命令开始。
-- shell-native 可执行包模型，将工具调用转化为可版本化、可容器解析、可安装、可分发、
-  可组合、可验证的命令实体。
-- 面向生物信息学工具与轻量 flows 的命令级可复现性，从任务命令下方的执行层
-  补全 Nextflow、Snakemake 等 workflow 系统，而不是替代它们。
-- TAFFISH DSL 语言及其 `taffish` 编译器，用于把 `.taf` 脚本编译为 Shell 脚本，并保留命令行工具的组合能力。
-- `taf`，用于安装、更新、运行 TAFFISH 可执行包的本地包管理器、app 安装器与命令执行器。
-- TAFFISH Hub，一个基于 GitHub 的可执行包生态，让用户可以发现、更新、安装、
-  查询、维护并在本地运行 apps。
-- 通过 Docker、Podman 或 Apptainer 进行 container-aware 执行，同时让 TAFFISH
-  命令保持普通 shell 命令的使用形态。
-- 面向版本、依赖、平台、容器、上游来源、smoke checks 和 Hub trust signals 的
-  app 元数据。
-- `taffish-mcp`，一个保守的 MCP server，让 AI 客户端可以检查 TAFFISH 项目，
-  并在不运行容器的前提下编译候选命令。
-- 使用 Apache License 2.0 开源的 Common Lisp 实现。
+- 把生物信息学用户已经在使用的 Shell 命令带入命令级可复现执行。
+- 提供 `.taf` 语言和 `taffish` 编译器，把命令接口封装成 shell-native 可执行 app。
+- 通过 `taf` 和 TAFFISH Hub 发现、安装、检查和运行可版本化工具与轻量 flow。
+- 通过 Docker、Podman 或 Apptainer 进行 container-aware 执行，并记录版本、依赖、
+  平台、smoke checks 和 trust signals 等元数据。
+- 使用 Common Lisp 开源实现，并提供保守的 `taffish-mcp` 接口，支持 AI 辅助检查
+  TAFFISH 项目。
 
 详细 CLI 行为、`.taf` 语法、容器运行参数、镜像配置、MCP 接入、安全细节、
 源码构建和具体 release 变化，请阅读
