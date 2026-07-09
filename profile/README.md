@@ -169,10 +169,10 @@ organization or publishing strategy.
 
 The TAFFISH project is described in the bioRxiv preprint:
 
-[TAFFISH: A lightweight, modular, and containerized workflow framework for reproducible bioinformatics analyses](https://www.biorxiv.org/content/10.1101/2025.09.15.672424v2)
+[TAFFISH: shell-native command-level reproducibility for bioinformatics](https://www.biorxiv.org/content/10.1101/2025.09.15.672424v3)
 
-Authors: Kaiyuan Han, Ting Wang, Shi-Shi Yuan, Cai-Yi Ma, Wei Su, Kejun Deng,
-Xiaolong Li, Hao Lv, and Hao Lin.
+Authors: Kaiyuan Han, Ting Wang, Shi-Shi Yuan, Cai-Yi Ma, Wei Su, Xiaolong Li,
+Kejun Deng, Hao Lin, and Hao Lyu.
 
 ## Project Status
 

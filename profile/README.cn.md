@@ -150,10 +150,10 @@ dependencies、platform、container、smoke checks、Hub trust status 和 upstre
 
 TAFFISH 项目已在 bioRxiv 预印本中描述：
 
-[TAFFISH: A lightweight, modular, and containerized workflow framework for reproducible bioinformatics analyses](https://www.biorxiv.org/content/10.1101/2025.09.15.672424v2)
+[TAFFISH: shell-native command-level reproducibility for bioinformatics](https://www.biorxiv.org/content/10.1101/2025.09.15.672424v3)
 
-作者：Kaiyuan Han、Ting Wang、Shi-Shi Yuan、Cai-Yi Ma、Wei Su、Kejun Deng、
-Xiaolong Li、Hao Lv 和 Hao Lin。
+作者：Kaiyuan Han、Ting Wang、Shi-Shi Yuan、Cai-Yi Ma、Wei Su、Xiaolong Li、
+Kejun Deng、Hao Lin 和 Hao Lyu。
 
 ## 项目状态
 
