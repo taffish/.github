@@ -144,7 +144,7 @@ TAFFISH app 是结构化的可执行包仓库，通常包含 `taffish.toml`、`s
 dependencies、platform、container、smoke checks、Hub trust status 和 upstream source 等可选元数据。
 
 官方 Hub 当前由 `taffish` 组织维护。现阶段，发布到官方 Hub 仅限组织成员。如果
-开发者希望贡献 app，可以联系维护者讨论加入组织或具体发布方式。
+开发者希望贡献 app，可以联系维护者讨论加入组织或具体发布方式。 (support@taffish.com)
 
 ## 论文
 
