@@ -163,7 +163,7 @@ sources.
 The official Hub is curated by the `taffish` organization. At the moment,
 publishing to the official Hub is limited to organization members. Developers
 who want to contribute apps can contact the maintainer to discuss joining the
-organization or publishing strategy.
+organization or publishing strategy. [support@taffish.com](support@taffish.com)
 
 ## Paper
 
