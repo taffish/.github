@@ -169,9 +169,9 @@ organization or publishing strategy. (support@taffish.com)
 
 The TAFFISH project is described in the bioRxiv preprint:
 
-[TAFFISH: shell-native command-level reproducibility for bioinformatics](https://www.biorxiv.org/content/10.1101/2025.09.15.672424v3)
+[TAFFISH: shell-native command-level reproducibility for bioinformatics](https://www.biorxiv.org/content/10.1101/2025.09.15.672424)
 
-Authors: Kaiyuan Han, Ting Wang, Shi-Shi Yuan, Cai-Yi Ma, Wei Su, Xiaolong Li,
+Authors: Kaiyuan Han, Ting Wang, Shishi Yuan, Caiyi Ma, Wei Su, Xiaolong Li,
 Kejun Deng, Hao Lin, and Hao Lyu.
 
 ## Project Status
