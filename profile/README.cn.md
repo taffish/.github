@@ -150,9 +150,9 @@ dependencies、platform、container、smoke checks、Hub trust status 和 upstre
 
 TAFFISH 项目已在 bioRxiv 预印本中描述：
 
-[TAFFISH: shell-native command-level reproducibility for bioinformatics](https://www.biorxiv.org/content/10.1101/2025.09.15.672424v3)
+[TAFFISH: shell-native command-level reproducibility for bioinformatics](https://www.biorxiv.org/content/10.1101/2025.09.15.672424)
 
-作者：Kaiyuan Han、Ting Wang、Shi-Shi Yuan、Cai-Yi Ma、Wei Su、Xiaolong Li、
+作者：Kaiyuan Han、Ting Wang、Shishi Yuan、Caiyi Ma、Wei Su、Xiaolong Li、
 Kejun Deng、Hao Lin 和 Hao Lyu。
 
 ## 项目状态
