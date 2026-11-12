@@ -1,164 +1,178 @@
 # TAFFISH
 
-[English](README.md) | [中文](README.cn.md)
+[English](README.md) | [中文](README.cn.md) · [官网](https://taffish.com)
 
-TAFFISH 将可复现性带回基于 Shell 的生物信息学命令。
+**将可复现性带回 shell。**
 
-TAFFISH 全称为 **Tools And Flows Framework Intensify SHell**。它是一个面向
-生物信息学命令行工具与轻量流程的 shell-native 可复现执行交付层。
+TAFFISH 将生物信息学工具和轻量流程封装成带版本的命令。安装指定版本后，可以直接
+用于已有的 shell 脚本、HPC 作业和工作流。TAFFISH 关注命令级可复现性，不替代你
+使用的工作流系统。
 
-TAFFISH 不试图替代 shell 脚本或现有 workflow 系统。它把工具调用、参数、容器
-运行环境、元数据和版本化 release 转化为可安装、可分发、可组合、可验证的可执行
-包，同时仍然保持普通 shell 命令的使用形态。
+<a id="目录"></a>
+<a id="面向用户"></a>
 
-## 目录
+## 从这里开始
 
-- [主要入口](#主要入口)
-- [Flow 门户与案例](#flow-门户与案例)
-- [TAFFISH 提供什么](#taffish-提供什么)
-- [安装入口](#安装入口)
-- [TAFFISH Hub 如何运行](#taffish-hub-如何运行)
-- [面向用户](#面向用户)
-- [面向 App 开发者](#面向-app-开发者)
-- [论文](#论文)
-- [项目状态](#项目状态)
+<a id="主要入口"></a>
 
-## 主要入口
-
-| 资源 | 作用 |
+| 我想…… | 从这里进入 |
 | --- | --- |
-| [taffish.com](https://taffish.com) | 官方项目主页，用于展示公开定位、项目故事、发展历史和公共入口。 |
-| [TAFFISH 是什么？](https://taffish.com/stories/positioning/) | 核心定位说明：把可复现性带回基于 Shell 的生物信息学命令。 |
-| [TAFFISH Hub](https://taffish.github.io) | 浏览当前可用的 TAFFISH 可执行包、apps、tools、flows、版本、依赖、可信元数据和安装命令。 |
-| [TAFFISH Flow Portal](https://taffish.github.io/flows/) | 官方 TAFFISH flow family、路线页面、示例和面向人的 flow 文档入口。 |
-| [taffish/taffish](https://github.com/taffish/taffish) | TAFFISH 开源源码仓库，包含安装器、源码树开发文档，以及 `taf`、`taffish` 和 `taffish-mcp` 的二进制 release 载荷。 |
-| [taffish/taffish-docs](https://github.com/taffish/taffish-docs) | TAFFISH、TAFFISH Hub、app 项目、`.taf` 脚本、容器、依赖和发布流程文档。 |
+| 安装 TAFFISH，运行第一个 app | [快速开始](https://github.com/taffish/taffish-docs/blob/main/zh/quick-start.cn.md) |
+| 查找工具、版本和安装命令 | [TAFFISH Hub](https://taffish.github.io/) |
+| 查看流程和示例报告 | [Flow 门户](https://taffish.github.io/flows/) |
+| 封装自己的工具 | [App 开发指南](https://github.com/taffish/taffish-docs/blob/main/zh/app-developer-guide.cn.md) |
 
-## Flow 门户与案例
+<a id="flow-门户与案例"></a>
 
-[TAFFISH Flow Portal](https://taffish.github.io/flows/) 是官方 flow family
-面向人的统一入口。它把由可安装 TAFFISH 命令包组成的问题导向路线组织成地图；
-真正执行仍然来自普通 `taf-*` 命令和明确的输入/输出契约。
+Flow 门户包含 RNA-seq、质量控制、BLAST 和系统发育等分析路线。
+完整案例可从 [RNA-seq Flow 专题](https://taffish.github.io/rnaseq-flows/)开始。
 
-这个门户链接：
+<a id="taffish-提供什么"></a>
+<a id="taffish-hub-如何运行"></a>
 
-- RNA-seq、NGS QC、BAM QC、BLAST 和系统发育等官方路线家族；
-- 成熟路线对应的 flow 专题页面和示例报告；
-- 更深入的 [RNA-seq Flow Family](https://taffish.github.io/rnaseq-flows/)
-  专题站，它仍然是当前最完整的公开 flow-family 案例。
+## 各部分如何配合
 
-## TAFFISH 提供什么
+1. **App 描述一条命令。** `.taf` 源码描述执行过程，`taffish.toml` 记录身份、版本和
+   依赖，帮助文档随 app 一起提供。Tool app 封装工具，Flow 则组合带版本的 app。
+2. **Hub 关联发行版与资源。** 各 app 仓库发布版本，并在需要时构建自己的容器镜像。
+   [Index](https://github.com/taffish/taffish-index)记录源码身份、镜像信息和 smoke 检查结果。
+   Hub 网页和命令行都使用这份目录来发现可用版本。
+3. **安装后的命令在你的环境中运行。** `taf` 安装选定发行版，创建带版本的命令。
+   `taffish` 编译器将 TAF 源码转换为 shell；容器化命令调用 Docker、Podman 或
+   Apptainer。各条命令如何组成分析，仍由你的脚本决定。
 
-- 把生物信息学用户已经在使用的 Shell 命令带入命令级可复现执行。
-- 提供 `.taf` 语言和 `taffish` 编译器，把命令接口封装成 shell-native 可执行 app。
-- 通过 `taf` 和 TAFFISH Hub 发现、安装、检查和运行可版本化工具与轻量 flow。
-- 通过 Docker、Podman 或 Apptainer 进行 container-aware 执行，并记录版本、依赖、
-  平台、smoke checks 和 trust signals 等元数据。
-- 使用 Common Lisp 开源实现，并提供保守的 `taffish-mcp` 接口，支持 AI 辅助检查
-  TAFFISH 项目。
+Hub 网页不执行你的分析。本地工具由 [TAFFISH 核心仓库](https://github.com/taffish/taffish)
+提供，浏览界面由 [Hub 网页仓库](https://github.com/taffish/taffish.github.io)维护。
+完整组件关系见[系统架构](https://github.com/taffish/taffish/blob/main/docs/architecture/README.zh-CN.md)。
 
-详细 CLI 行为、`.taf` 语法、容器运行参数、镜像配置、MCP 接入、安全细节、
-源码构建和具体 release 变化，请阅读
-[taffish/taffish-docs](https://github.com/taffish/taffish-docs) 和
-[taffish/taffish README](https://github.com/taffish/taffish)。
+<a id="安装入口"></a>
+<a id="试用一个工具"></a>
 
-## 安装入口
+## 安装与试用
 
-请从 [taffish/taffish](https://github.com/taffish/taffish) 安装 TAFFISH CLI。
-该仓库是源码、当前安装器、支持平台、release 版本、运行依赖、容器 backend 说明、网络说明、源码构建、release 校验和故障排查的权威入口。
+在[支持的 macOS 或 Linux 系统](https://github.com/taffish/taffish/blob/main/README-CN.md#快速安装)上，
+先选择下面**一种**安装范围，不需要两种都执行。
 
-快速用户级安装：
+### 整台设备：供所有用户使用
 
-```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user
-```
-
-系统级安装，适合共享服务器：
+适合共享工作站或服务器，由管理员安装，需要管理员权限。默认将核心命令和共享 app
+命令放在 `/usr/local/bin`，共享数据放在 `/opt/taffish`。
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
 ```
 
-中国大陆用户可以使用 Gitee 安装器，从 Gitee 镜像下载并初始化中国镜像 profile：
+安装后，在当前终端执行 `export PATH="/usr/local/bin:$PATH"`，再用 `taf --version` 验证。
+管理员应确保各用户的 `PATH` 都包含 `/usr/local/bin`。普通用户运行已安装 app 本身不需要
+`sudo`，但仍需满足容器后端的权限要求。
+
+### 个人安装：仅供当前用户使用
+
+适合个人设备或没有管理员权限的账号，不需要 `sudo`。核心命令放在 `~/.local/bin`，
+个人 app 和本地 Hub 数据放在 `~/.local/share/taffish`。
 
 ```sh
-curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sh -s -- --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user
 ```
 
-中国大陆系统级安装：
+安装后，执行 `export PATH="$HOME/.local/bin:$HOME/.local/share/taffish/bin:$PATH"`，
+再用 `taf --version` 验证。
+
+这些 `export` 对当前 shell 会话及其子进程生效，但不会保存为以后新开终端的配置。
+个人安装时，将上面个人安装的完整 `export` 行加入 `~/.zshrc`（Zsh）或
+`~/.bashrc`（交互式 Bash）。如果使用 Bash 登录终端，则放入 `~/.bash_profile`，
+或由该文件加载 `~/.bashrc`。保存后重新打开终端，用 `taf --version` 检查。
+共享安装由管理员为用户安排对应的 PATH 配置；安装器不会自动修改 shell 配置文件。
+无需另外安装 Lisp；Linux 安装器会提示阅读并接受随包运行时条款。
+
+### 中国地区：使用 Gitee
+
+如果 GitHub 下载缓慢或不可用，可以改用
+[Gitee 安装器](https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh)。
+只替换上面所选命令中的安装脚本地址，保留 `--system` 或 `--user`；系统安装仍需 `sudo`。
+具体见 [Gitee 安装说明](https://github.com/taffish/taffish/blob/main/README-CN.md#gitee)。
+离线安装、固定版本与校验等细节仍见
+[安装指南](https://github.com/taffish/taffish/blob/main/install/README-CN.md)。
+
+### 试用 FastQC
+
+试用容器化工具还需要 Git、网络连接，以及 Docker、Podman 或 Apptainer 中任意一个
+可用后端。无论上面选择哪种核心安装方式，下面的示例都**仅为当前账号安装** FastQC，
+再查看版本号，不需要准备输入数据。
+
+如果个人 app 命令目录尚未加入 `PATH`，先执行
+`export PATH="$HOME/.local/share/taffish/bin:$PATH"`。
 
 ```sh
-curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system
+taf update --user
+taf install --user fastqc 0.12.1-r1
+taf-fastqc-v0.12.1-r1 fastqc --version
 ```
 
-中国/Gitee 说明：Gitee 镜像用于缓解 GitHub raw 内容较慢或被阻断的问题。部分镜像服务
-可能限制大文件匿名 raw 下载，尤其是较大的 macOS 二进制文件。如果 Gitee 安装器无法
-获取二进制文件，可以使用可用网络/代理访问 GitHub 安装器，登录镜像后手动下载，或者查看
-当前 [taffish/taffish README](https://github.com/taffish/taffish) 中的说明。
+系统级安装核心不会让后续 `taf` 命令自动使用系统范围。若要共享这个 app，应由管理员
+改用 `sudo taf update --system` 和 `sudo taf install --system fastqc 0.12.1-r1`；
+普通用户随后正常运行已安装命令即可。后端和缓存权限见
+[共享安装指南](https://github.com/taffish/taffish-docs/blob/main/zh/system-administration.cn.md)。
 
-本地可用 `taf` 之后，通常从这些命令开始：
+最后一条命令会在容器中运行 FastQC，输出 `FastQC v0.12.1`。命令名固定了工具版本
+（`0.12.1`）和封装修订号（`r1`）；首次运行可能需要下载镜像。
+
+实际分析时，在存有你自己的 `reads.fq.gz` 的目录中，可以先查看将要执行的命令：
 
 ```sh
-taf doctor
-taf update
-taf search <keyword>
-taf install <app>
-taf info <app>
-taf outdated
-taf upgrade
-taf list
+taf-fastqc-v0.12.1-r1 --compile fastqc reads.fq.gz
 ```
 
-固定版本安装、平台依赖、中国/Gitee 说明、镜像配置、源码构建、release 校验、
-容器 backend 行为、私有/本地 app 安装和详细故障排查，请以当前
-[taffish/taffish README](https://github.com/taffish/taffish) 和
-[TAFFISH 文档](https://github.com/taffish/taffish-docs) 为准。
+紧跟在封装命令名后的 `--compile` 会输出生成的 shell，包括容器镜像、挂载和工具参数，
+不会运行 FastQC 或下载镜像。去掉 `--compile`，才会执行分析，并在输入文件旁生成
+FastQC 报告：
 
-第一次使用可以阅读
-[TAFFISH 快速开始](https://github.com/taffish/taffish-docs/blob/main/zh/quick-start.cn.md)。
+```sh
+taf-fastqc-v0.12.1-r1 fastqc reads.fq.gz
+```
 
-## TAFFISH Hub 如何运行
+同一条带版本的命令也可以放进 shell 脚本或工作流系统。
+编译预览用于检查执行方式，不代表数据或分析结果已经通过验证。
 
-TAFFISH Hub 当前基于 GitHub 实现。它发布供本地 `taf` 命令消费的可执行包元数据，
-而不是在服务器上运行用户任务。
+## 主要能力与指南
 
-1. 每个 app 都位于独立仓库，根目录包含 `taffish.toml`。
-2. app 仓库发布类似 `v0.1.0-r1` 的 release tag。
-3. app 仓库通过自己的 GitHub Actions workflow 构建容器镜像。
-4. [taffish-index](https://github.com/taffish/taffish-index) 扫描组织、校验新增版本、记录依赖、平台、容器 digest、smoke、trust 和 upstream 元数据，并生成静态 JSON 索引。
-5. 用户执行 `taf update` 后，就可以在本地通过 `taf` 安装和运行 apps。
+| 能力 | 可以做什么 | 详细说明 |
+| --- | --- | --- |
+| App 管理 | 查找、安装和升级工具，在脚本中使用明确版本。 | [Hub 使用指南](https://github.com/taffish/taffish-docs/blob/main/zh/taffish-hub.cn.md) |
+| TAF 脚本 | 在 `.taf` 源码中描述和组合命令，再编译为 shell。 | [TAF 教程](https://github.com/taffish/taffish-docs/blob/main/zh/taf-script-tutorial.cn.md) |
+| 容器后端 | 使用 Docker、Podman 或 Apptainer 运行容器化 app，具体支持情况以该 app 为准。 | [后端配置](https://github.com/taffish/taffish-docs/blob/main/zh/quick-start.cn.md#容器后端) |
+| Flow 与报告 | 将带版本的 app 组合成可复用分析；部分流程还提供报告。只有自身实现需要时，Flow 才需另配容器。 | [Flow 指南](https://github.com/taffish/taffish-docs/blob/main/zh/taf-flow-developer-guide.cn.md) |
+| 交互式 app | 部分 app 提供浏览器界面或桌面会话；后端、端口和访问要求见各 app 帮助。 | [示例：Cytoscape](https://github.com/taffish/cytoscape/blob/v3.10.5-r1/docs/help.md) |
+| AI 客户端集成 | `taffish-mcp` 通过 MCP 提供检查、校验和编译能力，不执行分析或启动容器。 | [MCP 指南](https://github.com/taffish/taffish-docs/blob/main/zh/taffish-mcp.cn.md) |
+| 验证信息 | 查看已记录的源码提交、镜像摘要和各后端 smoke 结果；这些检查不等于科学验证。 | [安全与信任模型](https://github.com/taffish/taffish-docs/blob/main/zh/security-model.cn.md) |
+| 部署与诊断 | 配置个人或共享安装、镜像源和缓存，用 `taf doctor` 检查本地问题。 | [系统管理](https://github.com/taffish/taffish-docs/blob/main/zh/system-administration.cn.md) · [故障排查](https://github.com/taffish/taffish-docs/blob/main/zh/troubleshooting.cn.md) |
 
-[taffish.github.io](https://taffish.github.io) 是面向人的网页版 Hub；
-[taffish-index](https://github.com/taffish/taffish-index) 是面向程序消费的数据源。
+[文档总览](https://github.com/taffish/taffish-docs/blob/main/README.cn.md)提供完整用户与开发指南；
+具体版本的变化见[核心发布记录](https://github.com/taffish/taffish/releases)。
 
-## 面向用户
+<a id="面向-app-开发者"></a>
 
-可以通过 [TAFFISH Hub](https://taffish.github.io) 浏览可用可执行包，并在本地通过
-`taf` 安装和运行它们。关于安装、CLI 行为、`.taf` 语法、容器使用和故障排查，请阅读
-[taffish/taffish-docs](https://github.com/taffish/taffish-docs)。
+## 开发与参与
 
-## 面向 App 开发者
+封装工具请读 [App 开发指南](https://github.com/taffish/taffish-docs/blob/main/zh/app-developer-guide.cn.md)，
+组合流程请读 [Flow 开发指南](https://github.com/taffish/taffish-docs/blob/main/zh/taf-flow-developer-guide.cn.md)。
+开发和使用自己的 app 不要求先发布到官方 Hub。
 
-TAFFISH app 是结构化的可执行包仓库，通常包含 `taffish.toml`、`src/main.taf`、
-`docs/help.md`、`target/` 构建产物、版本化 release tag，并且可以提供
-dependencies、platform、container、smoke checks、Hub trust status 和 upstream source 等可选元数据。
+官方 Hub 目前由组织成员管理发布。推荐收录软件或讨论参与维护，请联系
+[support@taffish.com](mailto:support@taffish.com)。软件问题请在对应仓库反馈；
+核心问题可提交到 [taffish/taffish](https://github.com/taffish/taffish/issues)。
 
-官方 Hub 当前由 `taffish` 组织维护。现阶段，发布到官方 Hub 仅限组织成员。如果
-开发者希望贡献 app，可以联系维护者讨论加入组织或具体发布方式。 (support@taffish.com)
+<a id="论文"></a>
+<a id="项目状态"></a>
 
-## 论文
+## 论文与开源
 
-TAFFISH 项目已在 bioRxiv 预印本中描述：
-
-[TAFFISH: shell-native command-level reproducibility for bioinformatics](https://www.biorxiv.org/content/10.1101/2025.09.15.672424)
+阅读 bioRxiv 预印本：
+[TAFFISH: shell-native command-level reproducibility for bioinformatics](https://www.biorxiv.org/content/10.1101/2025.09.15.672424)。
 
 作者：Kaiyuan Han、Ting Wang、Shishi Yuan、Caiyi Ma、Wei Su、Xiaolong Li、
 Kejun Deng、Hao Lin 和 Hao Lyu。
 
-## 项目状态
-
-TAFFISH 已经开源，并且仍在积极开发中。本地 CLI/编译器实现位于
-[taffish/taffish](https://github.com/taffish/taffish)，使用 Apache License 2.0
-授权。当前公开基础设施主要基于 GitHub repositories、GitHub Actions、GitHub
-Packages、GitHub Pages 和静态 package index。未来也许会需要独立服务器版本的
-Hub，但当前设计会优先保持发布和索引路径简单、透明、容易复现。
+核心实现以 [Apache License 2.0](https://github.com/taffish/taffish/blob/main/LICENSE) 开源；
+封装的第三方工具保留各自的许可证。
+TAFFISH 全称为 **Tools And Flows Framework Intensify SHell**。
