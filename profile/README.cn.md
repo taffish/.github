@@ -21,6 +21,7 @@ TAFFISH 将生物信息学工具和轻量流程封装成带版本的命令。安
 | 查找工具、版本和安装命令 | [TAFFISH Hub](https://taffish.github.io/) |
 | 查看流程和示例报告 | [Flow 门户](https://taffish.github.io/flows/) |
 | 封装自己的工具 | [App 开发指南](https://github.com/taffish/taffish-docs/blob/main/zh/app-developer-guide.cn.md) |
+| 浏览 TAFFISH 源代码 | [TAFFISH 核心仓库](https://github.com/taffish/taffish) |
 
 <a id="flow-门户与案例"></a>
 
@@ -50,49 +51,84 @@ Hub 网页不执行你的分析。本地工具由 [TAFFISH 核心仓库](https:/
 
 ## 安装与试用
 
-在[支持的 macOS 或 Linux 系统](https://github.com/taffish/taffish/blob/main/README-CN.md#快速安装)上，
-先选择下面**一种**安装范围，不需要两种都执行。
+按网络条件选择 [GitHub](#github)、[Gitee](#gitee) 或[本地离线安装](https://github.com/taffish/taffish/blob/main/README-CN.md#本地或离线安装)。
+官方平台包提供 `taf`、`taffish` 和 `taffish-mcp`，安装和验证这三个命令无需另装 Lisp
+或容器后端。下面的在线命令需要 `curl` 和网络连接。
 
-### 整台设备：供所有用户使用
+| 支持平台 | 需额外准备 |
+| --- | --- |
+| Apple Silicon Mac，macOS 15 及以上 | 无 |
+| 使用 glibc 的 Linux x86-64 | `tar`、`gzip` |
 
-适合共享工作站或服务器，由管理员安装，需要管理员权限。默认将核心命令和共享 app
-命令放在 `/usr/local/bin`，共享数据放在 `/opt/taffish`。
+完整平台说明见[主仓库安装指南](https://github.com/taffish/taffish/blob/main/README-CN.md#快速安装)。
+
+以下命令包含 `--accept-runtime-license`：在 Linux 上表示明确接受
+[LispWorks 运行时条款](https://github.com/taffish/taffish/blob/main/licenses/LISPWORKS-RUNTIME.txt)，
+无需中途输入 `yes`；请先阅读并接受条款再执行。如希望安装时手动确认，去掉该参数即可。
+macOS 无需此确认，会忽略该参数。
+
+个人安装仅供当前账号使用，无需 `sudo`；系统安装供整台设备的所有用户使用。四条命令只需执行一条。
+系统安装需要管理员权限，`sudo` 仍可能要求输入密码。共享安装应安排使用者接受运行时条款，
+或由具有相应授权的管理员代为接受。
+
+### GitHub
+
+**个人安装：**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user --accept-runtime-license
 ```
 
-安装后，在当前终端执行 `export PATH="/usr/local/bin:$PATH"`，再用 `taf --version` 验证。
-管理员应确保各用户的 `PATH` 都包含 `/usr/local/bin`。普通用户运行已安装 app 本身不需要
-`sudo`，但仍需满足容器后端的权限要求。
-
-### 个人安装：仅供当前用户使用
-
-适合个人设备或没有管理员权限的账号，不需要 `sudo`。核心命令放在 `~/.local/bin`，
-个人 app 和本地 Hub 数据放在 `~/.local/share/taffish`。
+**系统安装：**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system --accept-runtime-license
 ```
 
-安装后，执行 `export PATH="$HOME/.local/bin:$HOME/.local/share/taffish/bin:$PATH"`，
-再用 `taf --version` 验证。
+<a id="中国地区使用-gitee"></a>
 
-这些 `export` 对当前 shell 会话及其子进程生效，但不会保存为以后新开终端的配置。
-个人安装时，将上面个人安装的完整 `export` 行加入 `~/.zshrc`（Zsh）或
-`~/.bashrc`（交互式 Bash）。如果使用 Bash 登录终端，则放入 `~/.bash_profile`，
-或由该文件加载 `~/.bashrc`。保存后重新打开终端，用 `taf --version` 检查。
-共享安装由管理员为用户安排对应的 PATH 配置；安装器不会自动修改 shell 配置文件。
-无需另外安装 Lisp；Linux 安装器会提示阅读并接受随包运行时条款。
+### Gitee
 
-### 中国地区：使用 Gitee
+GitHub 下载缓慢或不可用时，可以使用 Gitee；该入口会为新配置选用国内索引。
+macOS 安装时会自动下载并合并压缩包分片；GitHub 和 Linux 下载仍使用完整压缩包。
 
-如果 GitHub 下载缓慢或不可用，可以改用
-[Gitee 安装器](https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh)。
-只替换上面所选命令中的安装脚本地址，保留 `--system` 或 `--user`；系统安装仍需 `sudo`。
-具体见 [Gitee 安装说明](https://github.com/taffish/taffish/blob/main/README-CN.md#gitee)。
-离线安装、固定版本与校验等细节仍见
-[安装指南](https://github.com/taffish/taffish/blob/main/install/README-CN.md)。
+**个人安装：**
+
+```sh
+curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sh -s -- --user --accept-runtime-license
+```
+
+**系统安装：**
+
+```sh
+curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system --accept-runtime-license
+```
+
+<a id="个人安装仅供当前用户使用"></a>
+<a id="整台设备供所有用户使用"></a>
+<a id="让新终端也能找到命令"></a>
+
+### PATH 与安装验证
+
+两种下载来源使用相同的默认路径：
+
+- **个人安装：**核心命令位于 `~/.local/bin`，app 和本地 Hub 数据位于
+  `~/.local/share/taffish`。执行 `export PATH="$HOME/.local/bin:$HOME/.local/share/taffish/bin:$PATH"`。
+- **系统安装：**核心命令和共享 app 命令位于 `/usr/local/bin`，共享数据位于
+  `/opt/taffish`。执行 `export PATH="/usr/local/bin:$PATH"`。
+
+随后用 `taf --version` 验证。这些 export 只对当前 shell 会话及其子进程生效，不会保存到新终端。
+个人安装时，将同一行 export 加入 `~/.zshrc`（Zsh）或 `~/.bashrc`（交互式 Bash）。
+Bash 登录终端则使用 `~/.bash_profile`，或由它加载 `~/.bashrc`。保存后重新打开终端再次检查。
+安装器不会自动修改 shell 配置文件。
+
+共享安装由管理员确保各用户的 PATH 包含 `/usr/local/bin`。普通用户运行已安装 app 本身
+不需要 `sudo`，但仍需满足容器后端的权限要求。
+
+其他安装方式与维护细节见[本地离线安装](https://github.com/taffish/taffish/blob/main/README-CN.md#本地或离线安装)、
+[固定版本](https://github.com/taffish/taffish/blob/main/install/README-CN.md#安装入口)、
+[升级说明](https://github.com/taffish/taffish/blob/main/install/README-CN.md#升级和移除)和
+[校验与验签](https://github.com/taffish/taffish/blob/main/install/README-CN.md#发布验签)。
 
 ### 试用 FastQC
 

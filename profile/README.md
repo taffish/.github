@@ -20,6 +20,7 @@ it does not replace your workflow system.
 | Find a tool, version, or installation command | [TAFFISH Hub](https://taffish.github.io/) |
 | Explore flows and example reports | [Flow Portal](https://taffish.github.io/flows/) |
 | Package a tool of my own | [App Developer Guide](https://github.com/taffish/taffish-docs/blob/main/en/app-developer-guide.en.md) |
+| Browse the TAFFISH source code | [TAFFISH core](https://github.com/taffish/taffish) |
 
 <a id="flow-portal-and-examples"></a>
 
@@ -54,56 +55,90 @@ for the full component map.
 
 ## Install and Try
 
-On a [supported macOS or Linux system](https://github.com/taffish/taffish#quick-install),
-choose **one** installation scope below. You do not need to run both installers.
+Choose [GitHub](#github), [Gitee](#gitee) or [local/offline installation](https://github.com/taffish/taffish/blob/main/README.md#local-or-offline-install).
+The official packages include `taf`, `taffish` and `taffish-mcp`; installing and checking these commands
+does not require a separate Lisp installation or a container backend. The online commands below need
+`curl` and network access.
 
-### For All Users on the Machine
+| Supported platform | Additional requirements |
+| --- | --- |
+| Apple Silicon Mac, macOS 15 or later | None |
+| glibc-based Linux x86-64 | `tar`, `gzip` |
 
-An administrator installs TAFFISH once for a shared workstation or server.
-This requires administrator privileges. By default, core commands and shared
-app commands go in `/usr/local/bin`; shared data goes in `/opt/taffish`.
+See the [core installation guide](https://github.com/taffish/taffish#quick-install) for full platform details.
+
+The commands below include `--accept-runtime-license`. On Linux, this explicitly accepts the
+[LispWorks runtime terms](https://github.com/taffish/taffish/blob/main/licenses/LISPWORKS-RUNTIME.txt)
+without an interactive `yes` prompt; read and accept the terms before running a command.
+Omit the option if you prefer to confirm during installation. macOS does not require this confirmation
+and ignores the option.
+
+Choose a personal installation for your account (no `sudo`) or a system-wide installation for all users.
+Run only one of the four commands. System-wide installation requires administrator access;
+`sudo` may prompt for your password. For a shared installation, users must accept the runtime terms,
+or an administrator with the appropriate authority may accept on their behalf.
+
+### GitHub
+
+**Personal installation:**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user --accept-runtime-license
 ```
 
-After installation, run `export PATH="/usr/local/bin:$PATH"` in your terminal,
-then check with `taf --version`. Ensure `/usr/local/bin` is in each user's `PATH`.
-Running an installed app does not itself require `sudo`, though the container backend may have its own
-permission requirements.
-
-### For Your Account Only
-
-Use this on a personal machine or when you do not have administrator access.
-No `sudo` is needed. Core commands go in `~/.local/bin`, and your apps and local
-Hub data stay under `~/.local/share/taffish`.
+**System-wide installation:**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sh -s -- --user
+curl -fsSL https://raw.githubusercontent.com/taffish/taffish/main/install/install-taffish.sh | sudo sh -s -- --system --accept-runtime-license
 ```
 
-After installation, run `export PATH="$HOME/.local/bin:$HOME/.local/share/taffish/bin:$PATH"`,
-then check with `taf --version`.
+<a id="china--gitee"></a>
 
-These `export` commands affect the current shell session and its child processes;
-they do not save the setting for future terminals. For a personal installation,
-add the same personal `export` line to `~/.zshrc` (Zsh) or `~/.bashrc` (interactive
-Bash). For a Bash login shell, put it in `~/.bash_profile` instead, or have that
-file load `~/.bashrc`. Open a new terminal and check with `taf --version`.
-For a shared installation, the administrator should arrange the appropriate
-PATH setup for users. The installer does not edit shell profiles.
-No separate Lisp installation is needed. On Linux,
-the installer asks you to read and accept the bundled runtime terms.
+### Gitee
 
-### China / Gitee
+Use Gitee if GitHub downloads are slow or unavailable. This installer selects the China index
+for a new configuration. On macOS, it downloads and reassembles archive parts automatically;
+GitHub and Linux downloads use complete archives.
 
-If GitHub downloads are slow or unavailable, use the
-[Gitee installer](https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh).
-Replace only the installer URL in your chosen command above; keep its `--system`
-or `--user` option and, for system installation, `sudo`.
-See the [Gitee instructions](https://github.com/taffish/taffish/blob/main/README.md#gitee).
-Offline installation, pinned releases and verification remain in the
-[installation guide](https://github.com/taffish/taffish/blob/main/install/README.md).
+**Personal installation:**
+
+```sh
+curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sh -s -- --user --accept-runtime-license
+```
+
+**System-wide installation:**
+
+```sh
+curl -fsSL https://gitee.com/taffish-org/taffish/raw/main/install/install-taffish.gitee.sh | sudo sh -s -- --system --accept-runtime-license
+```
+
+<a id="for-your-account-only"></a>
+<a id="for-all-users-on-the-machine"></a>
+<a id="keep-path-available-in-new-terminals"></a>
+
+### PATH and Verification
+
+Both download sources use the same default paths:
+
+- **Personal:** core commands go in `~/.local/bin`; apps and local Hub data stay under
+  `~/.local/share/taffish`. Run `export PATH="$HOME/.local/bin:$HOME/.local/share/taffish/bin:$PATH"`.
+- **System-wide:** core and shared app commands go in `/usr/local/bin`; shared data goes in
+  `/opt/taffish`. Run `export PATH="/usr/local/bin:$PATH"`.
+
+Then check with `taf --version`. These exports affect the current shell session and its child processes,
+not future terminals. For a personal installation, add the same export to `~/.zshrc` (Zsh) or
+`~/.bashrc` (interactive Bash). For a Bash login shell, use `~/.bash_profile`, or have it load
+`~/.bashrc`. Open a new terminal and check again. The installer does not edit shell profiles.
+
+For a shared installation, the administrator should ensure each user's PATH includes `/usr/local/bin`.
+Running an installed app does not itself require `sudo`, though the container backend may have its
+own permission requirements.
+
+For other installation methods and maintenance, see
+[local/offline installation](https://github.com/taffish/taffish/blob/main/README.md#local-or-offline-install),
+[pinned versions](https://github.com/taffish/taffish/blob/main/install/README.md#install-from-raw-installer),
+[upgrades](https://github.com/taffish/taffish/blob/main/install/README.md#upgrade-and-removal) and
+[verification](https://github.com/taffish/taffish/blob/main/install/README.md#release-verification).
 
 ### Try FastQC
 
